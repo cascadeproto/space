@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    {% include "snippets/headtag.njk" %}
+
+</head>
+<body{% if home %} class="home"{% endif %} data-width="???">
+    <header class="container">
+
+        {% include "snippets/header.njk" %}
+
+    </header>
+    <main class="container{% if isPage %} flow{% endif %}">
+        
+        {{ content | safe }}
+
+    </main>
+    <section class="container flow mentions">
+
+        {% include "snippets/webmentions.njk" %}
+
+    </section>
+    <footer class="container flow">
+
+        {% include "snippets/footer.njk" %}
+        
+    </footer>
+    <script>
+        window.addEventListener('resize', function(){
+            document.body.setAttribute('data-width', window.innerWidth);
+        });
+    </script>
+</body>
+</html>

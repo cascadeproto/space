@@ -1,0 +1,15 @@
+---
+title: All Blog Posts
+permalink: "/post/"
+---
+
+<h1>All Blog Posts</h1>
+
+<ul>
+{%- for post in collections.allposts -%}
+  <li>
+    <span>{% if not post.data.post.date %}{{ post.date.toLocaleDateString() }}{% else %}{{ post.data.post.date.toLocaleDateString() }}{% endif %}</span>
+    <a href="{{ post.url }}">{% if not post.data.post.title %}{{ post.data.title }}{% else %}{{ post.data.post.title }}{% endif %}</a>
+  </li>
+{%- endfor -%}
+</ul>

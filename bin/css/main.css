@@ -1,0 +1,174 @@
+:root {
+    color-scheme: light dark;
+
+    --dark: #222222;
+    --light: #efefef;
+
+    --light-main-bg: var(--light);
+    --light-accent-bg: white;
+    --light-text-color: var(--dark);
+
+    --dark-main-bg: var(--dark);
+    --dark-accent-bg: black;
+    --dark-text-color: var(--light);
+
+    --background-color: light-dark(var(--light-main-bg), var(--dark-main-bg));
+    --text-color: light-dark(var(--light-text-color), var(--dark-text-color));
+    --accent-bg: light-dark(var(--light-accent-bg), var(--dark-accent-bg));
+}
+body {
+    background-color: var(--light);
+    background-color: var(--background-color);
+    color: var(--dark);
+    color: var(--text-color);
+
+    position: relative;
+    display: grid;
+    grid-template-columns: 15px 1fr min(100% - 2rem, var(--container-max, 80ch)) 2fr 1fr 15px;
+}
+.container {
+    margin-inline: 0;
+    grid-column: 3 / 4;
+    inline-size: 100%;
+}
+main.container {
+    position: relative;
+}
+h1,h2,h3,h4,h5,h6,.site-header { font-weight: bold; }
+h1, .site-header { font-size: 2rem; }
+h2 { font-size: 1.6rem; }
+h3 { font-size: 1.3rem; }
+h4 { font-size: 1.2rem; }
+h5,h6 { font-size: 1.1rem; }
+header, footer {
+    background-color: white;
+    background-color: var(--accent-bg);
+    border-radius: 0 0 40px 40px;
+    padding-inline: 1rem;
+    padding-block: calc(1rem + 15px) 2rem;
+    margin-block: 0 2rem;
+}
+footer {
+    border-radius: 40px 40px 0 0;
+    padding-block: 2rem 0;
+    margin-block: 2rem 0;
+    img {
+        margin-inline: auto;
+    }
+}
+img[usage="emoji"] {
+    display: inline;
+}
+/* HI! */
+.welcome {
+    font-size: 3em;
+    font-weight: bold;
+    margin-block-start: 0;
+}
+img.cascadehi {
+    max-inline-size: 40ch;
+    position: absolute;
+    right: 0;
+    bottom: -44px;
+}
+@media only screen and (max-width: 700px) {
+    img.cascadehi {
+        right: 50%;
+        transform: translateX(50%);
+    }
+    .container:has(img.cascadehi) {
+        padding-block-end: 400px;
+    }
+}
+/* Webmentions */
+.mentions {
+    margin-block-start: 1em;
+    border-block-start: 3px solid var(--dark-accent-bg);
+    form {
+        background-color: var(--accent-bg);
+        border-radius: 15px;
+        padding: 1em;
+        margin-block: 1em;
+    }
+    input {
+        display: block;
+        max-inline-size: 100%;
+        inline-size: 30ch;
+        border: 2px solid var(--text-color);
+        padding: .5em 1em;
+        border-radius: 15px;
+    }
+    button {
+        border: 2px solid var(--text-color);
+        padding: .5em 1em;
+        border-radius: 15px;
+        &:hover, &:focus {
+            background-color: var(--background-color);
+        }
+    }
+    summary {
+        cursor: pointer;
+    }
+    .likes, .reposts {
+        ul {
+            display: flex;
+            gap: 5px;
+            margin-block: 5px;
+        }
+        img.u-photo {
+            max-inline-size: 50px;
+            border-radius: 15px;
+        }
+        &.empty {
+            display: none;
+        }
+    }
+    .replies {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        margin-block: 1em;
+        .comment {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+        }
+        .avatar {
+            grid-column: 1 / 2;
+            margin-inline-end: 2em;
+            img {
+                border-radius: 15px;
+            }
+        }
+        article, .meta {
+            grid-column: 2 / 3;
+            padding: .5em;
+            background-color: var(--accent-bg);
+            position: relative;
+        }
+        article { border-radius: 15px 15px 0 0; }
+        .meta {
+            margin-block-start: 3px;
+            border-radius: 0 0 15px 15px;
+            font-style: italic;
+            opacity: 0.7;
+        }
+        article::before {
+            content: '';
+            display: block;
+            block-size: 2em;
+            inline-size: 3em;
+            position: absolute;
+            right: 100%;
+            top: 1em;
+            border-style: solid;
+            border-color: transparent var(--accent-bg) transparent transparent;
+            border-width: 1em 1.5em;
+        }
+    }
+}
+/* Footer */
+.aboutme ul {
+    list-style-type: disc;
+    margin-inline-start: 2em;
+}
+.furcode { font-style: italic; }

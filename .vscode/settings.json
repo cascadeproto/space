@@ -1,0 +1,13 @@
+{
+    "files.exclude": {
+        ".vscode": true,
+        "node_modules": true,
+        "package-lock.json": true
+    },
+    "grammarly.selectors": [
+        {
+            "language": "markdown",
+            "scheme": "file"
+        }
+    ]
+}

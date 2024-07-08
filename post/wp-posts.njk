@@ -1,0 +1,12 @@
+---
+tags: post
+pagination:
+    data: posts
+    size: 1
+    alias: post
+    addAllPagesToCollections: true
+permalink: /post/{{ post.id }}/
+images: {{ post.images }}
+---
+
+{{ post.content | safe }}

@@ -1,0 +1,52 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<link rel="dns-prefetch" href="https://cdn.protogen.gg/" />
+<link rel="preload" href="/bin/font/slkscr.ttf" as="font">
+<link rel="preload" href="/bin/font/slkscrb.ttf" as="font">
+
+<meta property="og:title" content="{% if post.title %}{{ post.title }}{% else %}{{ title }}{% endif %}">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/bin/img/cascade-icon.jpeg">
+<meta property="og:url" content="https://cascading.space{{ page.url }}">
+<meta property="og:description" content="{% if summary %}{{ summary }}{% else %}Cascading.Space is the home of Cascade, a protogen who likes experimenting with the web.{% endif %}">
+
+<meta name="robots" content="noimageai">
+<meta name="robots" content="noai">
+<meta name="robots" content="index,follow,noodp">
+
+<meta name="description" content="{% if summary %}{{ summary }}{% else %}Cascading.Space is the home of Cascade, a protogen who likes experimenting with the web.{% endif %}">
+<meta name="author" content="Cascade the Protogen (cascade@cascading.space)">
+<meta name="generator" content="{{ eleventy.generator }}">
+
+<link rel="me" href="mailto:cascade@cascading.space">
+<link rel="me" href="https://furry.engineer/@cascade">
+<link rel="me" href="https://bsky.app/profile/cascading.space">
+<link rel="me" href="https://github.com/cascadeproto">
+<link rel="pgpkey" href="https://cascading.space/bin/cascade-pgp.txt">
+<link rel="canonical" href="https://cascading.space{{ page.url }}">
+<link rel="sitemap" href="https://cascading.space/all/">
+
+<link rel="webmention" href="https://webmention.io/cascading.space/webmention">
+<link rel="pingback" href="https://webmention.io/cascading.space/xmlrpc">
+<link rel="authorization_endpoint" href="https://indieauth.com/auth">
+<link rel="token_endpoint" href="https://tokens.indieauth.com/token">
+<link rel="openid.delegate" href="https://cascading.space/">
+<link rel="openid.server" href="https://openid.indieauth.com/openid">
+
+<link rel="alternate" type="application/rss+xml" title="cascading.space" href="/feed.xml">
+
+<link rel="icon apple-touch-icon" href="/bin/img/cascade-icon.jpeg" sizes="300x300" type="image/jpeg">
+<link rel="icon" href="/bin/img/icon-96.png" sizes="96x96" type="image/png">
+<link rel="icon" href="/bin/img/icon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/bin/img/icon-16.png" sizes="16x16" type="image/png">
+
+<title>{% if post.title %}{{ post.title }}{% else %}{{ title }}{% endif %}{% if not home %} - cascading.space{% endif %}</title>
+
+<link rel="stylesheet" href="/bin/css/reset.css">
+{% if unicornCss %}
+    {{ unicornCss }}
+{% else %}
+<link rel="stylesheet" href="/bin/css/main.css">
+{% endif %}

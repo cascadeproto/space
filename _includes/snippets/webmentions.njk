@@ -1,0 +1,71 @@
+{% set mentions = webmentions | getMentionsForUrl(siteRoot + page.url) %}
+
+<form class="flow" id="webmention-form" method="post" action="https://webmention.io/cascading.space/webmention">
+    <input type="hidden" name="target" value="{{ siteRoot + page.url }}">
+    <label for="reply-url">Have you mentioned this page somewhere? Share the link!</label>
+    <div class="inputs flow">
+        <input type="text" id="reply-url" name="source" placeholder="https://example.com/my-post">
+        <button type="submit" id="webmention-submit">Send Webmention</button>
+    </div>
+</form>
+
+<details class="explainer">
+    <summary>The heck is all this?</summary>
+    <p>The interactions shown here all came either from people posting on their own websites using <a href="https://indieweb.org/Webmention" target="_blank">webmentions</a>, or gathered from public interactions on posts from Bluesky or Mastodon.</p>
+</details>
+
+<details class="likes{% if not mentions.likeOf.length %} empty{% endif %}" open="">
+    <summary>{{ mentions.likeOf.length }} {% if mentions.likeOf.length == 1 %}Like{% else %}Likes{% endif %}</summary>
+    <ul>
+        {% for like in mentions.likeOf %}
+        <li class="like h-entry">
+            <a class="h-card u-url" href="{{ like.author.url }}" target="_blank">
+                <img class="u-photo" src="{{ like.author.photo }}" alt="Avatar of {{ like.author.name }}" />
+                <span class="p-name p-author visually-hidden">{{ like.author.name }}</span>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</details>
+
+<details class="reposts{% if not mentions.repostOf.length %} empty{% endif %}" open="">
+    <summary>{{ mentions.repostOf.length }} {% if mentions.repostOf.length == 1 %}Repost{% else %}Reposts{% endif %}</summary>
+    <ul>
+        {% for repost in mentions.repostOf %}
+        <li class="repost h-entry">
+            <a class="h-card u-url" href="{{ repost.author.url }}" target="_blank">
+                <img class="u-photo" src="{{ repost.author.photo }}" alt="Avatar of {{ repost.author.name }}" />
+                <span class="p-name p-author visually-hidden">{{ repost.author.name }}</span>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</details>
+
+{% if mentions.inReplyTo.length %}
+<h2>Comments</h2>
+<ul class="replies">
+    {% for reply in mentions.inReplyTo %}
+    <li class="comment h-entry">
+        <div class="avatar h-card p-author">
+            <a class="u-url" href="{{ reply.author.url }}" target="_blank">
+                <img class="u-photo" src="{{ reply.author.photo }}" alt="Avatar of {{ reply.author.name }}" />
+                <span class="p-name visually-hidden">{{ reply.author.name }}</span>
+            </a>
+        </div>
+        <article>
+            <div class="e-content">
+                {{ reply.content.html | safe }}
+            </div>
+        </article>
+        <div class="meta">
+            By <a class="p-author" href="{{ reply.author.url }}" target="_blank">{{ reply.author.name }}</a> • 
+            <a class="u-url" href="{{ reply.url }}" target="_blank">
+                Original post
+                <time class="dt-published visually-hidden" datetime="{{ reply.published }}">{{ reply.published }}</time>
+            </a>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}

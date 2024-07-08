@@ -1,0 +1,5 @@
+/__static
+/.cache
+/node_modules
+.env
+package.json

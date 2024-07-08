@@ -1,0 +1,55 @@
+---
+title: you find yourself in cascading.space
+home: true
+permalink: '/index.html'
+eleventyExcludeFromCollections: true
+---
+
+<img class="cascadehi" src="https://cdn.protogen.gg/wp-content/uploads/2024/07/cascade-profile-transparent-nosquare.png" alt="Cascade popping up smiling" />
+
+
+<p class="welcome">welcome, friends!</p>
+
+<p>Pardon the mess - live redesign is in progress.</p>
+
+<section class="home-section">
+  <h2><a href="/post" aria-label="All posts">blog</a></h2>
+  <ul>
+  {%- for post in collections.allposts -%}
+    <li>
+      <span>{% if not post.data.post.date %}{{ post.date.toLocaleDateString() }}{% else %}{{ post.data.post.date.toLocaleDateString() }}{% endif %}</span>
+      <a href="{{ post.url }}">{% if not post.data.post.title %}{{ post.data.title }}{% else %}{{ post.data.post.title }}{% endif %}</a>
+    </li>
+  {%- endfor -%}
+  </ul>
+</section>
+
+<section class="home-section">
+    <h2><a href="https://en.wikipedia.org/wiki/Webring" target="_blank">webrings</a></h2>
+    <p class="webrings">
+      <a href="https://xn--sr8hvo.ws/previous"><--</a>
+      <a href="https://xn--sr8hvo.ws">IndieWeb Webring</a>
+      <a href="https://xn--sr8hvo.ws/next">--></a>
+      <br/>
+      <a href="https://cleanfurs.club/prev"><--</a>
+      <a href="https://cleanfurs.club">SFW Furries</a>
+      <a href="https://cleanfurs.club/next">--></a>
+      <br/>
+      <a href="https://fediring.net/previous?host=cascading.space"><--</a>
+      <a href="https://fediring.net">Fediring</a>
+      <a href="https://fediring.net/next?host=cascading.space">--></a>
+      <br/>
+      <a href="https://lavender.chrysocyon.xyz/webring.html?prev=cascadingspace"><--</a>
+      <a href="https://lavender.chrysocyon.xyz/webring.html">animalia webring</a>
+      <a href="https://lavender.chrysocyon.xyz/webring.html?next=cascadingspace">--></a>
+      <br/>
+      <a href="https://baccyflap.com/noai/?prv&s=cas"><--</a>
+      <a href="https://baccyflap.com/noai">no ai webring</a>
+      <a href="https://baccyflap.com/noai/?nxt&s=cas">--></a>
+      <br/>
+      <a href="https://webring.bucketfish.me/redirect.html?to=prev&name=cascading.space"><--</a>
+      <a href="https://webring.bucketfish.me">bucket webring!</a>
+      <a href="https://webring.bucketfish.me/redirect.html?to=next&name=cascading.space">--></a>
+    </p>
+</section>
+
