@@ -7,6 +7,7 @@ mastoLink: ''
 reply: ''
 like: ''
 repost: ''
+date: 2024-04-22
 ---
 
 I've lost count. This is the *nth* blog/website I've made, hoping that this'll be the one. The one that doesn't get abandoned, that regularly gets posted on, that actually can serve as a home for all my web experiments and the one that doesn't get trashed in a bout of ADHD that has me convinced I've found a better way to do it only to end up deleting everything and starting fresh with the same setup as before.

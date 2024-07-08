@@ -7,6 +7,7 @@ mastoLink: ''
 reply: ''
 like: ''
 repost: ''
+date: 2024-04-29
 ---
 
 Let's get the quick definition out of the way now: [Webmentions](https://webmention.net/) are a standardized way for one website to let another one that it was linked to. That could be an actual comment, an indication of a like, a repost, or even an event RSVP. It's a pretty cool thing! In this post, I'll go over how I included it on this site, and what I hope to see with them in the future.
