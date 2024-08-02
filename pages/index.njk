@@ -18,7 +18,7 @@ eleventyExcludeFromCollections: true
   {%- for post in collections.allposts -%}
     <li>
       <span>{% if not post.data.post.date %}{{ post.date.toLocaleDateString() }}{% else %}{{ post.data.post.date.toLocaleDateString() }}{% endif %}</span>
-      <a href="{{ post.url }}">{% if not post.data.post.title %}{{ post.data.title }}{% else %}{{ post.data.post.title }}{% endif %}</a>
+      <a href="{{ post.url }}">{% if not post.data.post.title %}{{ post.data.title | safe }}{% else %}{{ post.data.post.title | safe }}{% endif %}</a>
     </li>
   {%- endfor -%}
   </ul>

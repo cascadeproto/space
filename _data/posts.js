@@ -81,6 +81,8 @@ module.exports = async function(){
                 posts.push(newPost);
             });
 
+            console.log(posts);
+
             return posts;
         }
     } catch (err) {
