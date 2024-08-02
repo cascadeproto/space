@@ -1,19 +1,5 @@
 {% set mentions = webmentions | getMentionsForUrl(siteRoot + page.url) %}
 
-<form class="flow" id="webmention-form" method="post" action="https://webmention.io/cascading.space/webmention">
-    <input type="hidden" name="target" value="{{ siteRoot + page.url }}">
-    <label for="reply-url">Have you mentioned this page somewhere? Share the link!</label>
-    <div class="inputs flow">
-        <input type="text" id="reply-url" name="source" placeholder="https://example.com/my-post">
-        <button type="submit" id="webmention-submit">Send Webmention</button>
-    </div>
-</form>
-
-<details class="explainer">
-    <summary>The heck is all this?</summary>
-    <p>The interactions shown here all came either from people posting on their own websites using <a href="https://indieweb.org/Webmention" target="_blank">webmentions</a>, or gathered from public interactions on posts from Bluesky or Mastodon.</p>
-</details>
-
 <details class="likes{% if not mentions.likeOf.length %} empty{% endif %}" open="">
     <summary>{{ mentions.likeOf.length }} {% if mentions.likeOf.length == 1 %}Like{% else %}Likes{% endif %}</summary>
     <ul>
@@ -69,3 +55,17 @@
     {% endfor %}
 </ul>
 {% endif %}
+
+<form class="flow" id="webmention-form" method="post" action="https://webmention.io/cascading.space/webmention">
+    <input type="hidden" name="target" value="{{ siteRoot + page.url }}">
+    <label for="reply-url">Have you mentioned this page somewhere? Share the link!</label>
+    <div class="inputs flow">
+        <input type="text" id="reply-url" name="source" placeholder="https://example.com/my-post">
+        <button type="submit" id="webmention-submit">Send Webmention</button>
+    </div>
+</form>
+
+<details class="explainer">
+    <summary>The heck is all this?</summary>
+    <p>The interactions shown here all came either from people posting on their own websites using <a href="https://indieweb.org/Webmention" target="_blank">webmentions</a>, or gathered from public interactions on posts from Bluesky or Mastodon.</p>
+</details>
