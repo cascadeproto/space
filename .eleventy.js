@@ -21,7 +21,7 @@ module.exports = function (eleventyConfig) {
     eleventyConfig.addCollection('alleverything', collection => {
         return collection.getAll().sort(mixedSort);
     });
-    eleventyConfig.addCollection('allposts', collection => {
+    eleventyConfig.addCollection('allarticles', collection => {
         return collection.getFilteredByTag('post').sort(mixedSort);
     });
 

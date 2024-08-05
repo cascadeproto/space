@@ -25,10 +25,11 @@ body {
     position: relative;
     display: grid;
     grid-template-columns: 15px 1fr min(100% - 2rem, var(--container-max, 80ch)) 2fr 1fr 15px;
+    grid-template-areas: min-left-margin max-left-margin main sidebar max-right-margin min-right-margin;
 }
 .container {
     margin-inline: 0;
-    grid-column: 3 / 4;
+    grid-column: main;
     inline-size: 100%;
 }
 main.container {

@@ -15,7 +15,7 @@
         {% set sharedesc = excerpt | excerpt | safe %}
     {% endif %}
 {% else %}
-    {% set sharedesc = 'Cascading.Space is the home of Cascade, a protogen who likes experimenting with the web.' %}
+    {% set sharedesc = 'Cascading Space is the home of Cascade, a protogen who likes experimenting with the web.' %}
 {% endif %}
 
 <meta property="og:title" content="{{ sharetitle }}">
@@ -58,7 +58,7 @@
 <link rel="icon" href="/bin/img/icon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="/bin/img/icon-16.png" sizes="16x16" type="image/png">
 
-<title>{% if post.title %}{{ post.title | safe }}{% else %}{{ title }}{% endif %}{% if not home %} - cascading.space{% endif %}</title>
+<title>{% if sharetitle %}{{ sharetitle | safe }}{% endif %}{% if not home %} - cascading.space{% endif %}</title>
 
 <link rel="stylesheet" href="/bin/css/reset.css">
 {% if unicornCss %}

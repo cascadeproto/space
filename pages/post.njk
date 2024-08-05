@@ -6,10 +6,10 @@ permalink: "/post/"
 <h1>All Blog Posts</h1>
 
 <ul>
-{%- for post in collections.allposts -%}
+{%- for post in collections.allarticles -%}
   <li>
     <span>{% if not post.data.post.date %}{{ post.date.toLocaleDateString() }}{% else %}{{ post.data.post.date.toLocaleDateString() }}{% endif %}</span>
-    <a href="{{ post.url }}">{% if not post.data.post.title %}{{ post.data.title }}{% else %}{{ post.data.post.title }}{% endif %}</a>
+    <a href="{{ post.url }}">{% if not post.data.post.title %}{{ post.data.title | safe }}{% else %}{{ post.data.post.title | safe }}{% endif %}</a>
   </li>
 {%- endfor -%}
 </ul>
