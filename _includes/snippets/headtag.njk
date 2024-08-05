@@ -4,11 +4,29 @@
 
 <link rel="dns-prefetch" href="https://cdn.protogen.gg/" />
 
-<meta property="og:title" content="{% if post.title %}{{ post.title | safe }}{% else %}{{ title }}{% endif %}">
-<meta property="og:type" content="{% if category == 'Article' or post.category == 'Article' %}article{% else %}website{% endif %}">
-<meta property="og:image" content="{% if post.featuredImage %}{{ post.featuredImage }}{% else %}/bin/img/cascade-icon.jpeg{% endif %}">
-<meta property="og:url" content="https://cascading.space{{ page.url }}">
-<meta property="og:description" content="{% if category == 'Article' or post.category == 'Article' %}{% if post.excerpt %}{{ post.excerpt | excerpt | safe }}{% else %}{{ excerpt | excerpt | safe }}{% endif %}{% else %}Cascading.Space is the home of Cascade, a protogen who likes experimenting with the web.{% endif %}">
+{% if post.title %}{% set sharetitle = post.title | safe %}{% else %}{% set sharetitle = title %}{% endif %}
+{% if category == 'Article' or post.category == 'Article' %}{% set sharetype = 'article' %}{% else %}{% set sharetype = 'website' %}{% endif %}
+{% if post.featuredImage %}{% set shareimage = post.featuredImage %}{% else %}{% set shareimage = '/bin/img/cascade-icon.jpeg' %}{% endif %}
+{% set shareurl = ['https://cascading.space', page.url] | join %}
+{% if category == 'Article' or post.category == 'Article' %}
+    {% if post.excerpt %}
+        {% set sharedesc = post.excerpt | excerpt | safe %}
+    {% else %}
+        {% set sharedesc = excerpt | excerpt | safe %}
+    {% endif %}
+{% else %}
+    {% set sharedesc = 'Cascading.Space is the home of Cascade, a protogen who likes experimenting with the web.' %}
+{% endif %}
+
+<meta property="og:title" content="{{ sharetitle }}">
+<meta property="og:type" content="{{ sharetype }}">
+<meta property="og:image" content="{{ shareimage }}">
+<meta property="og:url" content="{{ shareurl }}">
+<meta property="og:description" content="{{ sharedesc }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ sharetitle }}">
+<meta name="twitter:image" content="{{ shareimage }}">
+<meta name="twitter:description" content="{{ sharedesc }}">
 
 <meta name="robots" content="noimageai">
 <meta name="robots" content="noai">
