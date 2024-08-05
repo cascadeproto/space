@@ -29,7 +29,7 @@ body {
 }
 .container {
     margin-inline: 0;
-    grid-area: main;
+    grid-column: main;
     inline-size: 100%;
 }
 main.container {
