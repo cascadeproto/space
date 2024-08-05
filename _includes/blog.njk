@@ -1,0 +1,22 @@
+---
+layout: base.njk
+---
+<article class="h-entry">
+    <div class="meta visually-hidden">
+        <p>Published <a class="u-url" href="https://cascading.space{{ page.url }}"><time class="dt-published" datetime="{{ page.date.toISOString() }}">{{ page.date.toLocaleDateString() }}</time></a> by <a href="https://cascading.space" rel="author" class="p-author">Cascade</a></p>
+        {% if reply %}<p>In reply to: <a class="u-in-reply-to" href="{{ reply }}">{{ reply }}</a></p>{% endif %}
+        {% if like %}<p>Like of: <a class="u-like-of" href="{{ like }}">{{ like }}</a></p>{% endif %}
+        {% if repost %}<p>Repost of: <a class="u-repost-of" href="{{ repost }}">{{ repost }}</a></p>{% endif %}
+        {% if summary %}<blockquote><p class="p-summary">{{ summary }}</p></blockquote>{% endif %}
+        {% if bskyLink or mastoLink %}
+            <p>This post was shared
+                {% if bskyLink %} <a href="{{ bskyLink }}">here</a>{% if mastoLink %} and{% endif %}{% endif %}
+                {% if mastoLink %} <a href="{{ mastoLink }}">here</a>{% endif %}</p>
+        {% endif %}
+        {% if tags %}<ul class="tags">{% for tag in tags %}<li class="p-category">{{ tag }}</li>{% endfor %}</ul>{% endif %}
+    </div>
+    <div class="e-content flow">
+        <h1 class="p-name">{{title}}</h1>
+        {{ content | safe }}
+    </div>
+</article>

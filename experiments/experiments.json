@@ -1,6 +1,0 @@
-{
-    "layout": "base.njk",
-    "tags": [ "experiment" ],
-    "experiment": true,
-    "eleventyExcludeFromCollections": true
-}
