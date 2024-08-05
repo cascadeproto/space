@@ -9,6 +9,7 @@ module.exports = async function(){
     const postUrl = `https://cdn.protogen.gg/wp-json/wp/v2/posts?per_page=100&author=4`;
     const tagUrl = `https://cdn.protogen.gg/wp-json/wp/v2/tags?per_page=100`;
     const categoryUrl = `https://cdn.protogen.gg/wp-json/wp/v2/categories?per_page=100`;
+    const mediaUrl = `https://cdn.protogen.gg/wp-json/wp/v2/media?per_page=100&author=4`;
 
 
     function cleanHtml(rawHtml, endUrl){
@@ -48,11 +49,13 @@ module.exports = async function(){
         const postResponse = await fetch(postUrl);
         const tagResponse = await fetch(tagUrl);
         const categoryResponse = await fetch(categoryUrl);
+        const mediaResponse = await fetch(mediaUrl);
         
-        if (postResponse.ok && tagResponse.ok && categoryResponse.ok) {
+        if (postResponse.ok && tagResponse.ok && categoryResponse.ok && mediaResponse.ok) {
             const content = await postResponse.json();
             const tags = await tagResponse.json();
             const categories = await categoryResponse.json();
+            const media = await mediaResponse.json();
 
             function getList(group, ids){
                 let list = [];
@@ -63,7 +66,27 @@ module.exports = async function(){
                 return list;
             }
 
-            let posts = [];
+            function getMediaUrl(id){
+                let mediaItem = media.find(o => o.id === id);
+                return {
+                    url: mediaItem.source_url,
+                    alttext: mediaItem.alt_text,
+                    width: mediaItem.media_details.sizes.full.width,
+                    height: mediaItem.media_details.sizes.full.height
+                }
+            }
+
+            let posts = {
+                notes: [],
+                articles: [],
+                comics: [],
+                images: [],
+                likes: [],
+                quotes: [],
+                recipes: [],
+                replies: [],
+                reposts: []
+            };
             content.forEach(post => {
                 let url = `https://cascading.space/post/${post.id}/index.html`;
                 let newPost = {
@@ -74,11 +97,35 @@ module.exports = async function(){
                     title: post.title.rendered,
                     content: cleanHtml(post.content.rendered, url).html,
                     images: cleanHtml(post.content.rendered, url).images,
-                    excerpt: cleanHtml(post.excerpt.rendered),
+                    excerpt: cleanHtml(post.excerpt.rendered).html,
                     tags: getList(tags, post.tags),
-                    categories: getList(categories, post.categories)
+                    category: getList(categories, post.categories)[0],
+                    featuredImage: post.featured_media ? getMediaUrl(post.featured_media).url : false
                 };
-                posts.push(newPost);
+                switch (newPost.category) {
+                    case 'Note':
+                        posts.notes.push(newPost); break;
+                    case 'Article':
+                        posts.articles.push(newPost); break;
+                    case 'Comic':
+                        posts.comics.push(newPost); break;
+                    case 'Image':
+                        posts.images.push(newPost); break;
+                    case 'Like':
+                        posts.likes.push(newPost); break;
+                    case 'Quote':
+                        posts.quotes.push(newPost); break;
+                    case 'Recipe':
+                        posts.recipes.push(newPost); break;
+                    case 'Reply':
+                        posts.replies.push(newPost); break;
+                    case 'Repost':
+                        posts.reposts.push(newPost); break;
+                    default:
+                        console.log('Uncategorized post found with ID ' + newPost.id + ':');
+                        console.log('Title: ' + newPost.title);
+                        break;
+                }
             });
 
             console.log(posts);

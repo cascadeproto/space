@@ -5,7 +5,7 @@
     {% include "snippets/headtag.njk" %}
 
 </head>
-<body{% if home %} class="home"{% endif %} data-width="???">
+<body class="{% if category %}{% if post.category %}{{ post.category }}{% else %}{{ category }}{% endif %}{% endif %}{% if home %} home {% endif %}" data-width="???">
     <header class="container">
 
         {% include "snippets/header.njk" %}

@@ -40,6 +40,10 @@ module.exports = function (eleventyConfig) {
     eleventyConfig.addFilter('stringify', function(obj){
         return JSON.stringify(obj, null, '\t');
     });
+    eleventyConfig.addFilter("excerpt", (post) => {
+        const content = post.replace(/(<([^>]+)>)/gi, "");
+        return content;//.substr(0, content.lastIndexOf(" ", 200)) + "...";
+    });
 
     eleventyConfig.addTransform('imgTransform', async function(content){
         const imgRegex = /<img(.*?)>/gs;

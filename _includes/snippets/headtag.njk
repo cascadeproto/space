@@ -5,10 +5,10 @@
 <link rel="dns-prefetch" href="https://cdn.protogen.gg/" />
 
 <meta property="og:title" content="{% if post.title %}{{ post.title | safe }}{% else %}{{ title }}{% endif %}">
-<meta property="og:type" content="website">
-<meta property="og:image" content="/bin/img/cascade-icon.jpeg">
+<meta property="og:type" content="{% if category == 'Article' or post.category == 'Article' %}article{% else %}website{% endif %}">
+<meta property="og:image" content="{% if post.featuredImage %}{{ post.featuredImage }}{% else %}/bin/img/cascade-icon.jpeg{% endif %}">
 <meta property="og:url" content="https://cascading.space{{ page.url }}">
-<meta property="og:description" content="{% if summary %}{{ summary }}{% else %}Cascading.Space is the home of Cascade, a protogen who likes experimenting with the web.{% endif %}">
+<meta property="og:description" content="{% if category == 'Article' or post.category == 'Article' %}{% if post.excerpt %}{{ post.excerpt | excerpt }}{% else %}{{ excerpt | excerpt }}{% endif %}{% else %}Cascading.Space is the home of Cascade, a protogen who likes experimenting with the web.{% endif %}">
 
 <meta name="robots" content="noimageai">
 <meta name="robots" content="noai">

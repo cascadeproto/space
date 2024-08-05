@@ -1,12 +1,14 @@
 ---
 tags: post
 pagination:
-    data: posts
+    data: posts.articles
     size: 1
     alias: post
     addAllPagesToCollections: true
 permalink: /post/{{ post.id }}/
 images: {{ post.images }}
+excerpt: {{ post.excerpt }}
+category: {{ post.category }}
 ---
 
 {{ post.content | safe }}
