@@ -88,6 +88,19 @@ h2 { font-size: 1.6rem; }
 h3 { font-size: 1.3rem; }
 h4 { font-size: 1.2rem; }
 h5,h6 { font-size: 1.1rem; }
+code {
+    background-color: light-dark(var(--dark-main-bg), var(--dark-accent-bg));
+    color: var(--dark-text-color);
+    padding: .3em;
+    border-radius: 5px;
+}
+pre {
+    background-color: light-dark(var(--dark-main-bg), var(--dark-accent-bg));
+    border: 3px solid light-dark(var(--dark-accent-bg), var(--dark-text-color));
+    padding: 1em;
+    code { padding: 0; }
+    overflow-x: scroll;
+}
 header, footer {
     grid-area: header;
     background-color: white;
