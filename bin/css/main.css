@@ -105,6 +105,14 @@ pre {
         margin-block-end: -1em;
     }
 }
+ul {
+    list-style-type: disc;
+    margin-inline-start: 2em;
+}
+ol {
+    list-style-type: decimal;
+    margin-inline-start: 2em;
+}
 header, footer {
     grid-area: header;
     background-color: white;
@@ -235,8 +243,4 @@ img.cascadehi {
     }
 }
 /* Footer */
-.aboutme ul {
-    list-style-type: disc;
-    margin-inline-start: 2em;
-}
 .furcode { font-style: italic; }
