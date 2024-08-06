@@ -43,20 +43,22 @@ const botUas = [
     'Scrapy',
     'Timpibot',
     'VelenPublicWebCrawler',
-    'YouBot',
-  ]
+    'YouBot'];
   
   export default async (request, context) => {
     const ua = request.headers.get('user-agent');
   
-    let isBot = false
+    let isBot = false;
+
+      console.log("User agent: " + ua);
   
     botUas.forEach(u => {
       if (ua.toLowerCase().includes(u.toLowerCase())) {
         isBot = true
+          console.log("It's a bot!");
       }
-    })
+    });
   
     const response = isBot ? new Response(null, { status: 401 }) : await context.next();
-    return response
+    return response;
   };
