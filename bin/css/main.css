@@ -25,15 +25,62 @@ body {
     position: relative;
     display: grid;
     grid-template-columns: 15px 1fr min(100% - 2rem, var(--container-max, 80ch)) 2fr 1fr 15px;
-    grid-template-areas: ". . main sidebar . .";
+    grid-template-rows: auto auto auto auto;
+    grid-template-areas:    ". . header . . ."
+                            ". . main sidebar . ."
+                            ". . mentions . . ."
+                            ". . footer . . .";
 }
 .container {
     margin-inline: 0;
-    grid-column: main;
     inline-size: 100%;
 }
 main.container {
     position: relative;
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: main-start / sidebar-end;
+    grid-row: main;
+}
+main > article {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: main-start / sidebar-end;
+    grid-row: main;
+}
+main .e-content {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: main-start / sidebar-end;
+}
+main .e-content > *,
+main > *:not(article) {
+    grid-column: main;
+}
+main .e-content > aside.sidebar {
+    grid-column: sidebar;
+    margin-left: 1.5em;
+    height: 100%;
+    width: calc(100% - 1.5em);
+    position: absolute;
+    right: 0;
+    > * {
+        background-color: var(--accent-bg);
+        padding: 2em;
+        border-radius: 40px;
+        margin-block-start: 5em;
+    }
+}
+@media only screen and (max-width: 1400px) {
+    main .e-content > aside.sidebar {
+        grid-column: main;
+        position: relative;
+        margin: 0;
+        width: 100%;
+        > * {
+            margin-block-start: 1em;
+        }
+    }
 }
 h1,h2,h3,h4,h5,h6,.site-header { font-weight: bold; }
 h1, .site-header { font-size: 2rem; }
@@ -42,6 +89,7 @@ h3 { font-size: 1.3rem; }
 h4 { font-size: 1.2rem; }
 h5,h6 { font-size: 1.1rem; }
 header, footer {
+    grid-area: header;
     background-color: white;
     background-color: var(--accent-bg);
     border-radius: 0 0 40px 40px;
@@ -50,6 +98,7 @@ header, footer {
     margin-block: 0 2rem;
 }
 footer {
+    grid-area: footer;
     border-radius: 40px 40px 0 0;
     padding-block: 2rem 0;
     margin-block: 2rem 0;
@@ -69,7 +118,7 @@ img[usage="emoji"] {
 img.cascadehi {
     max-inline-size: 40ch;
     position: absolute;
-    right: 0;
+    left: 45ch;
     bottom: -44px;
 }
 @media only screen and (max-width: 700px) {
@@ -83,6 +132,7 @@ img.cascadehi {
 }
 /* Webmentions */
 .mentions {
+    grid-area: mentions;
     margin-block-start: 1em;
     border-block-start: 3px solid var(--dark-accent-bg);
     form {
