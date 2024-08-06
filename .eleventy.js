@@ -51,6 +51,7 @@ module.exports = function (eleventyConfig) {
         const alttextRegex = /alt="(.*?)"/g;
         const classesRegex = /class="(.*?)"/g;
         const usageRegex = /usage="(.*?)"/g;
+        const captionRegex = /data-caption="(.*?)"/g;
         if (this.page.outputFileExtension == 'html') {
             console.log('Scanning: ' + this.page.outputPath);
             if (content.match(imgRegex)) {
@@ -90,7 +91,10 @@ module.exports = function (eleventyConfig) {
                             loading: 'lazy',
                             decoding: 'async'
                         };
-                        newContent = newContent.replace(matches[i], Image.generateHTML(metadata, attributes));
+                        let caption = matches[i].match(captionRegex) ? matches[i].match(captionRegex)[0].slice(14, -1) : '';
+                        let captionOpening = matches[i].match(captionRegex) ? `<figure>` : '';
+                        let captionClosing = matches[i].match(captionRegex) ? `<figcaption>${caption}</figcaption></figure>` : '';
+                        newContent = newContent.replace(matches[i], `${captionOpening}${Image.generateHTML(metadata, attributes)}${captionClosing}`);
                     } else {
                         let noTransform = matches[i].replace('notransform', '');
                         newContent = newContent.replace(matches[i], noTransform);

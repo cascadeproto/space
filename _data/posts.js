@@ -21,19 +21,26 @@ module.exports = async function(){
         let figureTags = /<figure(.*?)<\/figure>+/g;
         let imgRegex = /src="(.*?)"/g;
         let alttextRegex = /alt="(.*?)"/g;
+        let titleRegex = /title="(.*?)"/g;
+        let classRegex = /class="(.*?)"/g;
         if (html.match(figureTags)) { // Check post for figures
             html.match(figureTags).forEach(function(figure, i){
                 if (figure.match(imgRegex)) { // Check figures for sources
                     if (figure.match(alttextRegex)) { // Check images for alt text
                         let alt = figure.match(alttextRegex)[0].slice(5, -1);
                         let url = figure.match(imgRegex)[0].slice(5, -1);
+                        // This will get the FIRST set of classes, the ones on the <figure> tag itself. Since these are the ones WP lets you add to, this should be fine.
+                        let classes = figure.match(classRegex) ? figure.match(classRegex)[0].slice(7, -1) : '';
+                        let caption = figure.match(titleRegex) ? figure.match(titleRegex)[0].slice(7, -1) : '';
                         images.push({
                             post: endUrl, // URL the page will live at
                             imageId: i, // ID of image on page
                             src: url, // URL of remote image
-                            alt: alt // Alt text for image
+                            alt: alt, // Alt text for image
+                            classes: classes,
+                            caption: caption
                         });
-                        html = html.replace(figure, `<img data-transform="true" src="${url}" alt="${alt}" />`);
+                        html = html.replace(figure, `<img data-transform="true" src="${url}" alt="${alt}" class="${classes}" data-caption="${caption}" />`);
                     }
                 }
             });
@@ -89,14 +96,15 @@ module.exports = async function(){
             };
             content.forEach(post => {
                 let url = `https://cascading.space/post/${post.id}/index.html`;
+                let newHtml = cleanHtml(post.content.rendered, url);
                 let newPost = {
                     id: post.id,
                     date: new Date(post.date_gmt),
                     modified: new Date(post.modified_gmt),
                     slug: post.slug === '...' ? '' : post.slug,
                     title: post.title.rendered,
-                    content: cleanHtml(post.content.rendered, url).html,
-                    images: cleanHtml(post.content.rendered, url).images,
+                    content: newHtml.html,
+                    images: newHtml.images,
                     excerpt: cleanHtml(post.excerpt.rendered).html,
                     tags: getList(tags, post.tags),
                     category: getList(categories, post.categories)[0],
