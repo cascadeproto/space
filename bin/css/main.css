@@ -98,8 +98,12 @@ pre {
     background-color: light-dark(var(--dark-main-bg), var(--dark-accent-bg));
     border: 3px solid light-dark(var(--dark-accent-bg), var(--dark-text-color));
     padding: 1em;
-    code { padding: 0; }
     overflow-x: scroll;
+    code {
+        display: block;
+        padding: 0;
+        margin-block-end: -1em;
+    }
 }
 header, footer {
     grid-area: header;
