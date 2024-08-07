@@ -136,8 +136,6 @@ module.exports = async function(){
                 }
             });
 
-            console.log(posts);
-
             return posts;
         }
     } catch (err) {

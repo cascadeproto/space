@@ -5,6 +5,8 @@ const Image  = require("@11ty/eleventy-img");
 
 module.exports = function (eleventyConfig) {
 
+    if (process.env.INCOMING_HOOK_BODY) console.log(JSON.stringify(process.env.INCOMING_HOOK_BODY));
+
     // General stuff
     eleventyConfig.addPlugin(pluginRss);
     eleventyConfig.addGlobalData('siteRoot', 'https://cascading.space');
