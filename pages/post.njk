@@ -5,7 +5,7 @@ permalink: "/post/"
 
 <h1>All Blog Posts</h1>
 
-<ul>
+<ul class="archive">
 {%- for post in collections.allarticles -%}
   <li>
     <span>{% if not post.data.post.date %}{{ post.date.toLocaleDateString() }}{% else %}{{ post.data.post.date.toLocaleDateString() }}{% endif %}</span>

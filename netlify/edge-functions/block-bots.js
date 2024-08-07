@@ -50,7 +50,8 @@ const botUas = [
   
     let isBot = false;
 
-      console.log("User agent: " + ua);
+    console.log("Headers: " + JSON.stringify(request.headers));
+    console.log("User agent: " + ua);
   
     botUas.forEach(u => {
       if (ua.toLowerCase().includes(u.toLowerCase())) {

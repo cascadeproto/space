@@ -14,7 +14,7 @@ eleventyExcludeFromCollections: true
 
 <section class="home-section">
   <h2><a href="/post" aria-label="All posts">blog</a></h2>
-  <ul>
+  <ul class="archive">
   {%- for post in collections.allarticles -%}
     <li>
       <span>{% if not post.data.post.date %}{{ post.date.toLocaleDateString() }}{% else %}{{ post.data.post.date.toLocaleDateString() }}{% endif %}</span>

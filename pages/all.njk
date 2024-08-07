@@ -6,11 +6,11 @@ eleventyExcludeFromCollections: true
 
 <h1>Full Sitemap</h1>
 
-<ul>
+<ul class="archive">
 {%- for post in collections.alleverything -%}
   <li>
     <span>{% if not post.data.post.date %}{{ post.date.toLocaleDateString() }}{% else %}{{ post.data.post.date.toLocaleDateString() }}{% endif %}</span>
-    <a href="{{ post.url }}">{% if not post.data.post.title %}{{ post.data.title }}{% else %}{{ post.data.post.title }}{% endif %}</a>
+    <a href="{{ post.url }}">{% if not post.data.post.title %}{{ post.data.title | safe }}{% else %}{{ post.data.post.title | safe }}{% endif %}</a>
   </li>
 {%- endfor -%}
 </ul>

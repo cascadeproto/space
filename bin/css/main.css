@@ -114,6 +114,20 @@ main ol:not(.notlist) {
     list-style-type: decimal;
     margin-inline-start: 2em;
 }
+main ul.archive {
+    list-style-type: none;
+    margin: 0;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+}
+ul.archive li {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+}
+ul.archive span {
+    margin-inline-end: 1em;
+}
 header, footer {
     grid-area: header;
     background-color: white;
