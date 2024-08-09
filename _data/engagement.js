@@ -59,6 +59,7 @@ module.exports = async function(){
                 comment.dataSource = 'homemade';
                 comment["wm-target"] = 'https://cascading.space' + comment.data.path;
                 comment.data.avatar = comment.data.avatar ? comment.data.avatar : 'https://cascading.space/bin/img/blank-avatar.png'
+                comment.data.url = comment.data.url ? comment.data.url : false;
                 engagement.inReplyTo.push(comment);
                 engagement.inReplyTo.sort(sortComments);
             });

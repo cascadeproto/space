@@ -60,7 +60,7 @@
             {% if reply.data.pass === commentPassword %}
             <li class="comment h-entry" id="{{ reply.data.comment_id }}">
                 <div class="avatar h-card p-author">
-                    <a class="u-url" href="{{ reply.data.url }}" target="_blank">
+                    <a class="u-url" href="{% if reply.data.url %}{{ reply.data.url }}{% else %}#{% endif %}" target="_blank">
                         <img class="u-photo" src="{{ reply.data.avatar }}" alt="Avatar of {{ reply.data.name }}" />
                         <span class="p-name visually-hidden">{{ reply.data.name }}</span>
                     </a>
@@ -71,7 +71,7 @@
                     </div>
                 </article>
                 <div class="meta">
-                    By <a class="p-author" href="{{ reply.data.url }}" target="_blank">{{ reply.data.name }}</a> • 
+                    By <a class="p-author" href="{% if reply.data.url %}{{ reply.data.url }}{% else %}#{% endif %}" target="_blank">{{ reply.data.name }}</a> • 
                     <a class="u-url" href="{{ siteRoot + page.url + '#' + reply.data.comment_id }}">Permalink</a> • 
                     <span class="reply-hook">Reply</span>
                     <time class="dt-published visually-hidden" datetime="{{ reply.created_at }}">{{ reply.created_at }}</time>
