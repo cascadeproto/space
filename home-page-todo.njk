@@ -54,7 +54,8 @@ motion/theme toggles, site controls
   </div>
   <input type="hidden" name="path" value="{{ page.url }}" />
   <input type="hidden" name="parent" value="0" />
-  <input type="hidden" name="commentId" class="commentId" />
+  <input type="hidden" name="commentId" />
+  <input type="hidden" name="modUrl" />
   <p><label>Your name
     <input type="text" name="name" required placeholder="Cascade" />
   </label></p>
@@ -70,14 +71,13 @@ motion/theme toggles, site controls
   <p><button type="submit">Send</button></p>
 </form>
 <script>
-  function newId(){
-    return Date.now().toString(36) + Math.random().toString(36).substr(2);
-  }
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const form = event.target;
-    document.querySelector('form.new-comment .commentId').value = newId();
+    let cid = Date.now().toString(36) + Math.random().toString(36).substr(2);
+    document.querySelector('[name="commentId"]').value = cid;
+    document.querySelector('[name="modUrl"]').value = `https://cascading.space/secret-moderation-hole/?comment=${cid}`;
     const data = new FormData(form);
 
     fetch('/', {
@@ -88,5 +88,5 @@ motion/theme toggles, site controls
       .then(() => console.log('Form submitted!'))
       .catch((error) => alert(error));
   };
-  document.querySelector('form.new-comment').addEventListener('submit', handleSubmit);
+  document.querySelector('[name="new-comment"]').addEventListener('submit', handleSubmit);
 </script>

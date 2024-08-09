@@ -28,6 +28,7 @@ module.exports = function (eleventyConfig) {
     // General stuff
     eleventyConfig.addPlugin(pluginRss);
     eleventyConfig.addGlobalData('siteRoot', 'https://cascading.space');
+    eleventyConfig.addGlobalData('commentPassword', 'pickles');
     eleventyConfig.addPassthroughCopy('bin');
     eleventyConfig.addPassthroughCopy('img');
 
@@ -46,12 +47,12 @@ module.exports = function (eleventyConfig) {
     });
 
     // Add filters
-    eleventyConfig.addFilter('getMentionsForUrl', function(webmentions, url){
+    eleventyConfig.addFilter('getMentionsForUrl', function(engagement, url){
         let mentions = {};
-        mentions.inReplyTo = webmentions.inReplyTo.filter(entry => entry['wm-target'] === url);
-        mentions.likeOf = webmentions.likeOf.filter(entry => entry['wm-target'] === url);
-        mentions.repostOf = webmentions.repostOf.filter(entry => entry['wm-target'] === url);
-        mentions.others = webmentions.others.filter(entry => entry['wm-target'] === url);
+        mentions.inReplyTo = engagement.inReplyTo.filter(entry => entry['wm-target'] === url);
+        mentions.likeOf = engagement.likeOf.filter(entry => entry['wm-target'] === url);
+        mentions.repostOf = engagement.repostOf.filter(entry => entry['wm-target'] === url);
+        mentions.others = engagement.others.filter(entry => entry['wm-target'] === url);
         return mentions;
     });
     eleventyConfig.addFilter("cssmin", function(code){
