@@ -18,12 +18,12 @@ module.exports = function (eleventyConfig) {
     //     }
     // }
 
-    console.log('Hook title: ' + process.env.INCOMING_HOOK_TITLE);
-    console.log('Hook URL: ' + process.env.INCOMING_HOOK_URL);
-    console.log('Hook body: ');
-    console.log(process.env.INCOMING_HOOK_BODY);
-
-    console.log(process.env.INCOMING_HOOK_BODY.totallythereforreal);
+    if (process.env.INCOMING_HOOK_BODY) {
+        console.log('Hook title: ' + process.env.INCOMING_HOOK_TITLE);
+        console.log('Hook URL: ' + process.env.INCOMING_HOOK_URL);
+        console.log('Hook body: ');
+        console.log(process.env.INCOMING_HOOK_BODY);
+    }
 
     // General stuff
     eleventyConfig.addPlugin(pluginRss);
