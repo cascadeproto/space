@@ -46,7 +46,7 @@ module.exports = function (eleventyConfig) {
         return collection.getFilteredByTag('post').sort(mixedSort);
     });
 
-    // Add filters
+    // Add filters 
     eleventyConfig.addFilter('getMentionsForUrl', function(engagement, url){
         let mentions = {};
         mentions.inReplyTo = engagement.inReplyTo.filter(entry => entry['wm-target'] === url);
