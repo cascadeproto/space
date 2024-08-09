@@ -149,10 +149,10 @@ footer {
 img[usage="emoji"] {
     display: inline;
 }
-main figure img {
+main img {
     margin-inline: auto;
 }
-main figure figcaption:not(:empty) {
+main figcaption:not(:empty) {
     font-style: italic;
     font-size: .9em;
     text-align: center;
