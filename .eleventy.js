@@ -18,6 +18,13 @@ module.exports = function (eleventyConfig) {
     //     }
     // }
 
+    console.log('Hook title: ' + process.env.INCOMING_HOOK_TITLE);
+    console.log('Hook URL: ' + process.env.INCOMING_HOOK_URL);
+    console.log('Hook body: ');
+    console.log(process.env.INCOMING_HOOK_BODY);
+
+    console.log(process.env.INCOMING_HOOK_BODY.totallythereforreal);
+
     // General stuff
     eleventyConfig.addPlugin(pluginRss);
     eleventyConfig.addGlobalData('siteRoot', 'https://cascading.space');
