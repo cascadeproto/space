@@ -14,7 +14,7 @@ function sortComments(a,b){
     if (b.published) bDate = new Date(b.published);
     if (b["wm-received"]) bDate = new Date(b["wm-received"]);
     if (b.created_at) bDate = new Date(b.created_at);
-    
+
     return aDate - bDate;
 }
 
@@ -58,6 +58,7 @@ module.exports = async function(){
             comments.forEach(comment => {
                 comment.dataSource = 'homemade';
                 comment["wm-target"] = 'https://cascading.space' + comment.data.path;
+                comment.data.avatar = comment.data.avatar ? comment.data.avatar : 'https://cascading.space/bin/img/blank-avatar.png'
                 engagement.inReplyTo.push(comment);
                 engagement.inReplyTo.sort(sortComments);
             });
