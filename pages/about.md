@@ -9,7 +9,7 @@ Hello!
 
 I'm Cascade! I'm called that because I like CSS (Cascading Style Sheets) so dang much.
 
-<img alt="Cascade smiling and making a heart sign" href="{{siteRoot}}/bin/img/CascadeLoveStick.png" notransform />
+<img alt="Cascade smiling and making a heart sign" src="{{siteRoot}}/bin/img/cascadelovestick.png" notransform />
 
 But that's just what I use instead of throwing my real name and face around, because I enjoy privacy and being an alternative silly creature on the internet is far more fun anyway. I have several characters, and many details about them! There will be a link here once I get those details better organized.
 

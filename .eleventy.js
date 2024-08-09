@@ -5,7 +5,7 @@ const Image  = require("@11ty/eleventy-img");
 
 module.exports = function (eleventyConfig) {
 
-    if (process.env.INCOMING_HOOK_BODY) {
+    if (process.env.INCOMING_HOOK_BODY.post.post_status) {
         if (process.env.INCOMING_HOOK_BODY.post.post_status == 'publish') {
             console.log('New post published with ID ' + process.env.INCOMING_HOOK_BODY.post_id);
 
