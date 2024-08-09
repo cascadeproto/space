@@ -5,18 +5,18 @@ const Image  = require("@11ty/eleventy-img");
 
 module.exports = function (eleventyConfig) {
 
-    if (process.env.INCOMING_HOOK_BODY.post.post_status) {
-        if (process.env.INCOMING_HOOK_BODY.post.post_status == 'publish') {
-            console.log('New post published with ID ' + process.env.INCOMING_HOOK_BODY.post_id);
+    // if (process.env.INCOMING_HOOK_BODY.post.post_status) {
+    //     if (process.env.INCOMING_HOOK_BODY.post.post_status == 'publish') {
+    //         console.log('New post published with ID ' + process.env.INCOMING_HOOK_BODY.post_id);
 
-            // Use this hook to create posts on bluesky/mastodon and get post URLs to embed in post on build
-            // Mastodon: 10/10 - The method to post a status returns an object that includes the new status URL.
-            // Bluesky: 7/10 - The returned object has a "uri" string, and the post ID is at the end of it, needs to be parsed. Example:
-            //                 https://bsky.social/xrpc/com.atproto.repo.getRecord?repo=cascading.space&collection=app.bsky.feed.post&rkey=3kz56gjn74c2f
-            //                 Will need to construct the post URL with that: `https://bsky.app/profile/cascading.space/post/${post_id}`
-            //                 Maybe I need to build the embed card manually as well?
-        }
-    }
+    //         // Use this hook to create posts on bluesky/mastodon and get post URLs to embed in post on build
+    //         // Mastodon: 10/10 - The method to post a status returns an object that includes the new status URL.
+    //         // Bluesky: 7/10 - The returned object has a "uri" string, and the post ID is at the end of it, needs to be parsed. Example:
+    //         //                 https://bsky.social/xrpc/com.atproto.repo.getRecord?repo=cascading.space&collection=app.bsky.feed.post&rkey=3kz56gjn74c2f
+    //         //                 Will need to construct the post URL with that: `https://bsky.app/profile/cascading.space/post/${post_id}`
+    //         //                 Maybe I need to build the embed card manually as well?
+    //     }
+    // }
 
     // General stuff
     eleventyConfig.addPlugin(pluginRss);
