@@ -1,0 +1,163 @@
+---
+title: Comment Moderation
+permalink: "/secret-moderation-hole/"
+eleventyExcludeFromCollections: true
+---
+
+<h1>Comment Moderation</h1>
+
+<form class="flow comment-moderation" name="approved-comments" netlify netlify-honeypot="sweetgoods">
+<p id="totalwaiting"></p>
+<p class="visually-hidden">Don't fill this out if you're human:
+    <input type="text" name="sweetgoods" />
+</p>
+<p><label>Comment ID:
+    <input type="text" name="comment_id" />
+</label></p>
+<p><label>IP address:
+    <input type="text" name="commenter_ip" />
+</label></p>
+<p><label>User Agent:
+    <input type="text" name="commenter_ua" />
+</label></p>
+<p><label>Page:
+    <input type="text" name="path" />
+</label></p>
+<p><label>Comment parent ID:
+    <input type="text" name="parent" />
+</label></p>
+<p id="comment-parent"></p>
+<p><label>Name:
+    <input type="text" name="name" />
+</label></p>
+<p><label>URL:
+    <input type="text" name="url" />
+</label></p>
+<p><label>Avatar:
+    <input type="text" name="avatar" />
+</label></p>
+<p><label>Comment:
+    <textarea name="comment"></textarea>
+</label></p>
+<p id="buttons">
+    <button id="delete-comment">Delete</button>
+    <button id="approve-comment" type="submit">Approve</button>
+</p>
+</form>
+
+<style>
+    .comment-moderation label {
+        display: block;
+        font-weight: bold;
+    }
+    .comment-moderation input,
+    .comment-moderation textarea {
+        display: block;
+        width: 100%;
+        padding: .3em;
+        font-weight: normal;
+    }
+    .comment-moderation button {
+        background-color: blue;
+        padding: .3em .7em;
+        border-radius: 4px;
+        border: 1px solid #00000044;
+        color: white;
+        font-weight: bold;
+    }
+    #delete-comment { background-color: red; }
+    #approve-comment { background-color: green; }
+</style>
+<script type="module">
+    const site_id = '71197ba4-a1bc-4651-9025-c10c57df7876';
+    const api_token = 'nfp_8uXZqHAe9faqZ19JnwUhXJ9MC3RBwsGV50fb';
+    const new_comment_form_id = '66b6335471d4a60008fa2e4f';
+    const api_root = 'https://api.netlify.com/api/v1';
+    const params = new URLSearchParams(document.location.search);
+    const review_id = params.get('comment');
+    const formEl = document.querySelector('form.comment-moderation');
+
+    const response = await fetch(`${api_root}/forms/${new_comment_form_id}/submissions`, {
+        headers: {
+            'User-Agent': 'Comment Moderation using Forms API (me@kam.black)',
+            'Authorization': `Bearer ${api_token}`
+        }
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        let currentComment = data.find(o => o.data.commentId === review_id);
+        console.log(currentComment);
+        let plural = data.length == 1 ? '' : 's';
+        // Get parent comment details
+        let parentHTML = '';
+        if (!currentComment.data.parent === "0") {
+            console.log('Getting parent comment...');
+            const approvedResponse = await fetch(`${api_root}/forms/${approved_comments_form_id}/submissions`, {
+                headers: {
+                    'User-Agent': 'Comment Moderation using Forms API (me@kam.black)',
+                    'Authorization': `Bearer ${api_token}`
+                }
+            });
+            if (approvedResponse.ok) {
+                const allComments = await approvedResponse.json();
+                let parentComment = allComments.find(o => o.data.comment_id === currentComment.data.parent);
+                parentHTML = `<strong>Name:</strong> ${parentComment.data.name}<br/><strong>Comment:</strong> ${parentComment.data.comment}`;
+            }
+        }
+
+        // Fill UI
+        document.querySelector('#totalwaiting').innerHTML = `There's ${data.length} comment${plural} awaiting moderation.`;
+        document.querySelector('.comment-moderation [name="comment_id"]').value = currentComment.data.commentId;
+        document.querySelector('.comment-moderation [name="commenter_ip"]').value = currentComment.data.ip;
+        document.querySelector('.comment-moderation [name="commenter_ua"]').value = currentComment.data.user_agent;
+        document.querySelector('.comment-moderation [name="path"]').value = currentComment.data.path;
+        document.querySelector('.comment-moderation [name="parent"]').value = currentComment.data.parent;
+        document.querySelector('.comment-moderation [name="name"]').value = currentComment.data.name;
+        document.querySelector('.comment-moderation [name="url"]').value = currentComment.data.url;
+        document.querySelector('.comment-moderation [name="avatar"]').value = currentComment.data.avatar;
+        document.querySelector('.comment-moderation [name="comment"]').value = currentComment.data.comment;
+        document.querySelector('#comment-parent').innerHTML = parentHTML;
+        // Delete button
+        document.querySelector('#delete-comment').addEventListener('click', function(){
+            fetch(`${api_root}/submissions/${currentComment.id}`, {
+                method: 'DELETE',
+                headers: {
+                    'User-Agent': 'Comment Moderation using Forms API (me@kam.black)',
+                    'Authorization': `Bearer ${api_token}`
+                }
+            })
+            .then(() => console.log('Comment deleted.'))
+            .catch((error) => console.error(error));
+            document.querySelector('#buttons').innerHTML = 'Comment deleted!';
+        });
+        // Approve button
+        document.querySelector('form.comment-moderation').addEventListener('submit', function(event){
+            event.preventDefault();
+
+            const form = event.target;
+            const data = new FormData(form);
+
+            fetch(`${api_root}/submissions/${currentComment.id}`, {
+                method: 'DELETE',
+                headers: {
+                    'User-Agent': 'Comment Moderation using Forms API (me@kam.black)',
+                    'Authorization': `Bearer ${api_token}`
+                }
+            })
+            .then(() => console.log('Comment deleted.'))
+            .catch((error) => console.error(error));
+
+            fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(data).toString()
+            })
+            .then(() => console.log('Form submitted!'))
+            .catch((error) => alert(error));
+
+            document.querySelector('#buttons').innerHTML = 'Comment approved!';
+        });
+    }
+</script>
