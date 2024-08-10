@@ -252,8 +252,19 @@ img.cascadehi {
             display: grid;
             grid-template-columns: 0px 100px 1fr;
             grid-template-areas: 'nesting avatar content';
+            outline-offset: 50px;
+            outline-color: transparent;
+            outline-width: 50px;
             &.nestingLevel-2 { grid-template-columns: 50px 100px 1fr; }
             &.nestingLevel-3 { grid-template-columns: 100px 100px 1fr; }
+            &:target {
+                outline-offset: 5px;
+                outline-color: var(--text-color);
+                outline-style: solid;
+                outline-width: 2px;
+                transition: all .75s;
+
+            }
         }
         .avatar {
             grid-column: avatar;
