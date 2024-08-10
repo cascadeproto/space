@@ -95,10 +95,10 @@ eleventyExcludeFromCollections: true
         let plural = data.length == 1 ? '' : 's';
         // Get parent comment details
         let parentHTML = '';
-        if (Number(comment.data.parent) != 0) {
-            console.log('Getting parent comment...');
-            parentHTML = `<a href="https://cascading.space${currentComment.data.path}#${currentComment.data.parent}" target="_blank">Permalink</a>`;
-        }
+        //if (Number(comment.data.parent) != 0) {
+        //    console.log('Getting parent comment...');
+        //    parentHTML = `<a href="https://cascading.space${currentComment.data.path}#${currentComment.data.parent}" target="_blank">Permalink</a>`;
+        //}
 
         // Fill UI
         document.querySelector('#totalwaiting').innerHTML = `There's ${data.length} comment${plural} awaiting moderation.`;

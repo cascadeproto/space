@@ -190,6 +190,7 @@ img.cascadehi {
         visibility: hidden;
         position: absolute;
         pointer-events: none;
+        width: 100%;
         }
         .after-send { display: block; margin: 1em; }
     }
