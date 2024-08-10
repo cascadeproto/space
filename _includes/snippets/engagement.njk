@@ -109,8 +109,10 @@
   </p>
 </form>
 <script>
-  let netField = document.querySelector('input[name="form-name"]');
-  document.querySelector('[name="now-comment"]').append(netField);
+    document.addEventListener("DOMContentLoaded", (event) => {
+        let netField = document.querySelector('input[name="form-name"]');
+        document.querySelector('[name="new-comment"]').append(netField);
+    });
   const handleSubmit = (event) => {
     event.preventDefault();
 
