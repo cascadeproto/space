@@ -25,3 +25,23 @@
 [[redirects]]
     from = "/credits"
     to = "/colophon"
+
+[[redirects]]
+    from = "/post/165"
+    to = "/post/proper-introductions-and-happy-blaugust"
+
+[[redirects]]
+    from = "/post/172"
+    to = "/post/its-headless-👻"
+
+[[redirects]]
+    from = "/post/177"
+    to = "/post/journals"
+
+[[redirects]]
+    from = "/post/194"
+    to = "/post/eleventy-lessons-learned"
+
+[[redirects]]
+    from = "/post/200"
+    to = "/post/a-saga-of-light-and-darkness"

@@ -101,7 +101,7 @@ module.exports = async function(){
                     id: post.id,
                     date: new Date(post.date_gmt),
                     modified: new Date(post.modified_gmt),
-                    slug: post.slug === '...' ? '' : post.slug,
+                    slug: post.slug === '...' ? false : post.slug,
                     title: post.title.rendered,
                     content: newHtml.html,
                     images: newHtml.images,
