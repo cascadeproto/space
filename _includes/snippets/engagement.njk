@@ -79,7 +79,6 @@
 </ul>
 {% endif %}
 
-{% if commentson %}
 <form id="reply" class="flow" name="new-comment" netlify netlify-honeypot="sugaa">
   <h2>Reply</h2>
   <div class="visually-hidden">Don't fill this out if you're a human: <input name="sugaa" /></div>
@@ -152,7 +151,6 @@
     });
   }
 </script>
-{% endif %}
 <form class="flow" id="webmention-form" method="post" action="https://webmention.io/cascading.space/webmention">
     <label for="reply-url">This website also supports <a href="https://indieweb.org/Webmention" target="_blank">Webmentions</a>! If your site doesn't send them automatically, you can send one to this page from here:</label>
     <input type="hidden" name="target" value="{{ siteRoot + page.url }}">
