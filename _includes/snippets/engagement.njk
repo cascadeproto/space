@@ -1,5 +1,4 @@
 {% set mentions = engagement | getMentionsForUrl(siteRoot + page.url) %}
-
 {# Likes #}
 <details class="likes{% if not mentions.likeOf.length %} empty{% endif %}" open="">
     <summary>{{ mentions.likeOf.length }} {% if mentions.likeOf.length == 1 %}Like{% else %}Likes{% endif %}</summary>
@@ -56,10 +55,9 @@
                 </div>
             </li>
         {% elif reply.dataSource === 'homemade' %}
-            {% if reply.data.pass === commentPassword %}
-            <li class="comment h-entry" id="{{ reply.data.comment_id }}">
+            <li class="comment h-entry nestingLevel-{{ reply.nestingDepth }}" id="{{ reply.data.comment_id }}">
                 <div class="avatar h-card p-author">
-                    <a class="u-url" href="{% if reply.data.url %}{{ reply.data.url }}{% else %}#{% endif %}" target="_blank">
+                    <a class="u-url" {% if reply.data.url %}href="{{ reply.data.url }}"{% endif %} target="_blank">
                         <img class="u-photo" src="{{ reply.data.avatar }}" alt="Avatar of {{ reply.data.name }}" />
                         <span class="p-name visually-hidden">{{ reply.data.name }}</span>
                     </a>
@@ -76,7 +74,6 @@
                     <time class="dt-published visually-hidden" datetime="{{ reply.created_at }}">{{ reply.created_at }}</time>
                 </div>
             </li>
-            {% endif %}
         {% endif %}
     {% endfor %}
 </ul>
@@ -104,7 +101,7 @@
   </label></p>
   <p><button type="submit">Send</button><button class="resetform">Reset</button></p>
   <p class="after-send">
-    Comment sent! It'll appear once it passes a spam check. :3<br/>
+    Comment sent! It'll appear once it passes a spam check. :3<br/><br/>
     <button class="resetform">Reset Form</button>
   </p>
 </form>

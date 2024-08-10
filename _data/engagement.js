@@ -18,6 +18,36 @@ function sortComments(a,b){
     return aDate - bDate;
 }
 
+function checkRedirects(target) {
+    const redirects = [
+        {
+            from: 'https://cascading.space/post/165',
+            to: 'https://cascading.space/post/proper-introductions-and-happy-blaugust'
+        },
+        {
+            from: 'https://cascading.space/post/172',
+            to: 'https://cascading.space/post/its-headless-👻'
+        },
+        {
+            from: 'https://cascading.space/post/177',
+            to: 'https://cascading.space/post/journals'
+        },
+        {
+            from: 'https://cascading.space/post/194',
+            to: 'https://cascading.space/post/eleventy-lessons-learned'
+        },
+        {
+            from: 'https://cascading.space/post/200',
+            to: 'https://cascading.space/post/a-saga-of-light-and-darkness'
+        }
+    ];
+    if (redirects.find(o => o.from === target)) {
+        return redirects.find(o => o.from === target).to;
+    } else {
+        return target;
+    }
+}
+
 module.exports = async function(){
     const commentsurl = `https://api.netlify.com/api/v1/forms/${process.env.COMMENTS_FORM_ID}/submissions`;
     const url = `https://webmention.io/api/mentions.jf2?domain=cascading.space&token=${process.env.WEBMENTIONIO_TOKEN}`;
@@ -31,8 +61,8 @@ module.exports = async function(){
             }
         });
         if (webmentionsresponse.ok && commentsresponse.ok) {
-            const webmentions = await webmentionsresponse.json();
-            const comments = await commentsresponse.json();
+            let webmentions = await webmentionsresponse.json();
+            let comments = await commentsresponse.json();
 
             let engagement = {
                 inReplyTo: [],
@@ -43,28 +73,73 @@ module.exports = async function(){
 
             webmentions.children.forEach(mention => {
                 mention.dataSource = 'webmentions';
+                mention.targetUrl = checkRedirects(mention["wm-target"]);
                 switch (mention["wm-property"]) {
                     case "in-reply-to":
-                        engagement.inReplyTo.push(mention); engagement.inReplyTo.sort(sortComments); break;
+                        engagement.inReplyTo.push(mention); break;
                     case "like-of":
-                        engagement.likeOf.push(mention); engagement.likeOf.sort(sortByDate); break;
+                        engagement.likeOf.push(mention); break;
                     case "repost-of":
-                        engagement.repostOf.push(mention); engagement.repostOf.sort(sortByDate); break;
+                        engagement.repostOf.push(mention); break;
                     default:
-                        engagement.others.push(mention); engagement.others.sort(sortByDate); break;
+                        engagement.others.push(mention); break;
                 }
             });
 
-            comments.forEach(comment => {
+            engagement.inReplyTo.sort(sortComments);
+            engagement.likeOf.sort(sortByDate);
+            engagement.repostOf.sort(sortByDate);
+            engagement.others.sort(sortByDate);
+
+            let relationships = [];
+
+            for (let i = 0; i < comments.length; i++) {
+                let comment = comments[i];
+                // Set default data
                 comment.dataSource = 'homemade';
-                comment["wm-target"] = 'https://cascading.space' + comment.data.path;
-                comment.data.avatar = comment.data.avatar ? comment.data.avatar : 'https://cascading.space/bin/img/blank-avatar.png'
+                comment.targetUrl = checkRedirects('https://cascading.space' + comment.data.path);
+                comment.data.avatar = comment.data.avatar ? comment.data.avatar : 'https://cascading.space/bin/img/blank-avatar.png';
                 comment.data.url = comment.data.url ? comment.data.url : false;
-                engagement.inReplyTo.push(comment);
-                engagement.inReplyTo.sort(sortComments);
+                comment.nestingDepth = 1;
+                comment.hasParent = false;
+                comment.isParentOf = false;
+                // Scan and record relationships
+                if (Number(comment.data.parent) != 0) {
+                    comment.hasParent = true;
+                    comment.nestingDepth++;
+                    if (comments.find(o => o.data.comment_id === comment.data.parent).data.parent != 0) {
+                        comment.nestingDepth++;
+                    }
+                    relationships.push({
+                        parent: comment.data.parent,
+                        child: comment.data.comment_id
+                    });
+                }
+                if (relationships.length) {
+                    relationships.forEach(relationship => {
+                        if (relationship.parent === comment.data.comment_id) {
+                            comment.isParentOf = relationship.child;
+                        }
+                    });
+                }
+            }
+
+            comments.sort(sortComments);
+
+            // Sort by relationships
+            relationships.forEach(relationship => {
+                // Find child, make copy, and delete from array
+                let childIndex = comments.indexOf(comments.find(o => o.data.comment_id === relationship.child));
+                let child = comments.find(o => o.data.comment_id === relationship.child);
+                comments.splice(childIndex, 1);
+                // Get parent index and add child back into array directly after
+                let parentIndex = comments.indexOf(comments.find(o => o.data.comment_id === relationship.parent));
+                comments.splice(parentIndex + 1, 0, child);
             });
 
-            console.log(engagement);
+            comments.filter(comment => comment.data.pass === 'pickles').forEach(comment => {
+                engagement.inReplyTo.push(comment);
+            });
 
             return engagement;
         }

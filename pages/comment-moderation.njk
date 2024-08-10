@@ -95,7 +95,7 @@ eleventyExcludeFromCollections: true
         let plural = data.length == 1 ? '' : 's';
         // Get parent comment details
         let parentHTML = '';
-        if (!currentComment.data.parent === "0") {
+        if (Number(comment.data.parent) != 0) {
             console.log('Getting parent comment...');
             parentHTML = `<a href="https://cascading.space${currentComment.data.path}#${currentComment.data.parent}" target="_blank">Permalink</a>`;
         }

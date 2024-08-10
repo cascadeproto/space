@@ -102,7 +102,6 @@ pre {
     code {
         display: block;
         padding: 0;
-        margin-block-end: -1em;
     }
 }
 .aboutme ul,
@@ -190,8 +189,7 @@ img.cascadehi {
         > *:not(.after-send) {
         visibility: hidden;
         position: absolute;
-        left: -99999px; top: -99999px;
-        z-index: -99999;
+        pointer-events: none;
         }
         .after-send { display: block; margin: 1em; }
     }
@@ -250,17 +248,20 @@ img.cascadehi {
         margin-block: 1em;
         .comment {
             display: grid;
-            grid-template-columns: 100px 1fr;
+            grid-template-columns: 0px 100px 1fr;
+            grid-template-areas: 'nesting avatar content';
+            &.nestingLevel-2 { grid-template-columns: 50px 100px 1fr; }
+            &.nestingLevel-3 { grid-template-columns: 100px 100px 1fr; }
         }
         .avatar {
-            grid-column: 1 / 2;
+            grid-column: avatar;
             margin-inline-end: 2em;
             img {
                 border-radius: 15px;
             }
         }
         article, .meta {
-            grid-column: 2 / 3;
+            grid-column: content;
             padding: .5em;
             background-color: var(--accent-bg);
             position: relative;
