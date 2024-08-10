@@ -111,6 +111,7 @@ module.exports = async function(){
                         comment.nestingDepth++;
                     }
                     relationships.push({
+                        depth: comment.nestingDepth,
                         parent: comment.data.parent,
                         child: comment.data.comment_id
                     });
@@ -126,7 +127,11 @@ module.exports = async function(){
 
             comments.sort(sortComments);
 
-            // Sort by relationships
+            // Sort by relationships, one level of depth at a time
+            relationships.sort((a,b) => {
+                if (a.depth < b.depth) { return -1; }
+                else { return 1; }
+            });
             relationships.forEach(relationship => {
                 // Find child, make copy, and delete from array
                 let childIndex = comments.indexOf(comments.find(o => o.data.comment_id === relationship.child));
