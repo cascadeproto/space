@@ -1,6 +1,7 @@
 ---
 title: HTML Test
 eleventyExcludeFromCollections: true
+commentson: true
 ---
 
 # Test post (Heading 1)
@@ -64,46 +65,3 @@ Mauris a ante. Suspendisse quam sem, consequat at, commodo vitae, feugiat in, nu
 > -Blockquote
 
 [^1]: Footnote content.
-
-
-<h2>Reply!</h2>
-<form class="new-comment flow" name="new-comment" netlify netlify-honeypot="sugaa" style="border: 1px solid black;">
-  <div class="visually-hidden">
-    <input name="sugaa" />
-  </div>
-  <input type="hidden" name="path" value="{{ page.url }}" />
-  <input type="hidden" name="parent" value="0" />
-  <input type="hidden" name="commentId" class="commentId" />
-  <p><label>Your name
-    <input type="text" name="name" required placeholder="Cascade" />
-  </label></p>
-  <p><label>Your website or social
-    <input type="text" name="url" placeholder="https://cascading.space" />
-  </label></p>
-  <p><label>Link to avatar
-    <input type="text" name="avatar" placeholder="https://cascading.space/bin/img/cascade-icon.jpeg" />
-  </label></p>
-  <p><label>Comment
-    <textarea name="comment" required placeholder="Comment here..."></textarea>
-  </label></p>
-  <p><button type="submit">Send</button></p>
-</form>
-<script>
-  function newId(){
-    return Date.now().toString(36) + Math.random().toString(36).substr(2);
-  }
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const form = event.target;
-    document.querySelector('form.new-comment .commentId').value = newId();
-    const data = new FormData(form);
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(data).toString()
-    })
-      .then(() => console.log('Form submitted!'))
-      .catch((error) => alert(error));
-  };
-  document.querySelector('form.new-comment').addEventListener('submit', handleSubmit);
-</script>

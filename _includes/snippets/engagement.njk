@@ -36,7 +36,7 @@
 <ul class="replies">
     {% for reply in mentions.inReplyTo %}
         {% if reply.dataSource === 'webmentions' %}
-            <li class="comment h-entry">
+            <li class="comment h-entry" id="{{ reply['wm-id'] }}">
                 <div class="avatar h-card p-author">
                     <a class="u-url" href="{{ reply.author.url }}" target="_blank">
                         <img class="u-photo" src="{{ reply.author.photo }}" alt="Avatar of {{ reply.author.name }}" />
@@ -50,10 +50,9 @@
                 </article>
                 <div class="meta">
                     By <a class="p-author" href="{{ reply.author.url }}" target="_blank">{{ reply.author.name }}</a> • 
-                    <a class="u-url" href="{{ reply.url }}" target="_blank">
-                        Original post
-                        <time class="dt-published visually-hidden" datetime="{{ reply.published }}">{{ reply.published }}</time>
-                    </a>
+                    <a href="{{ siteRoot + page.url + '#' + reply['wm-id'] }}" target="_blank">Permalink</a> • 
+                    <a class="u-url" href="{{ reply.url }}" target="_blank">Reply to original post</a>
+                    <time class="dt-published visually-hidden" datetime="{{ reply.published }}">{{ reply.published }}</time>
                 </div>
             </li>
         {% elif reply.dataSource === 'homemade' %}
@@ -71,9 +70,9 @@
                     </div>
                 </article>
                 <div class="meta">
-                    By <a class="p-author" href="{% if reply.data.url %}{{ reply.data.url }}{% else %}#{% endif %}" target="_blank">{{ reply.data.name }}</a> • 
-                    <a class="u-url" href="{{ siteRoot + page.url + '#' + reply.data.comment_id }}">Permalink</a> • 
-                    <span class="reply-hook">Reply</span>
+                    By <a class="p-author u-url" href="{% if reply.data.url %}{{ reply.data.url }}{% else %}#{% endif %}" target="_blank">{{ reply.data.name }}</a> • 
+                    <a href="{{ siteRoot + page.url + '#' + reply.data.comment_id }}">Permalink</a> • 
+                    <a href="#reply" class="reply-hook">Reply here</a>
                     <time class="dt-published visually-hidden" datetime="{{ reply.created_at }}">{{ reply.created_at }}</time>
                 </div>
             </li>
@@ -83,16 +82,81 @@
 </ul>
 {% endif %}
 
+{% if commentson %}
+<form id="reply" class="flow" name="new-comment" netlify netlify-honeypot="sugaa">
+  <h2>Reply</h2>
+  <div class="visually-hidden">Don't fill this out if you're a human: <input name="sugaa" /></div>
+  <input type="hidden" name="path" value="{{ page.url }}" />
+  <input type="hidden" name="parent" value="0" />
+  <input type="hidden" name="commentId" />
+  <input type="hidden" name="modUrl" />
+  <p><label>Your name (required)
+    <input type="text" name="name" required placeholder="Cascade" />
+  </label></p>
+  <p><label>Your website or social
+    <input type="text" name="url" placeholder="https://cascading.space" />
+  </label></p>
+  <p><label>Link to avatar
+    <input type="text" name="avatar" placeholder="https://cascading.space/bin/img/cascade-icon.jpeg" />
+  </label></p>
+  <p><label>Comment (required)
+    <textarea name="comment" required placeholder="Comment here..."></textarea>
+  </label></p>
+  <p><button type="submit">Send</button><button class="resetform">Reset</button></p>
+  <p class="after-send">
+    Comment sent! It'll appear once it passes a spam check. :3<br/>
+    <button class="resetform">Reset Form</button>
+  </p>
+</form>
+<script>
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const form = event.target;
+    let cid = Date.now().toString(36) + Math.random().toString(36).substr(2);
+    document.querySelector('[name="commentId"]').value = cid;
+    document.querySelector('[name="modUrl"]').value = `https://cascading.space/secret-moderation-hole/?comment=${cid}`;
+    const data = new FormData(form);
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(data).toString()
+    })
+      .then(() => {
+        console.log('Form submitted!');
+        document.querySelector('[name="new-comment"]').classList.add('comment-sent');
+        document.querySelector('[name="new-comment"] h2').innerHTML = 'Reply';
+        document.querySelector('[name="parent"]').value = 0;
+        form.reset();
+      })
+      .catch((error) => alert(error));
+  };
+  document.querySelector('[name="new-comment"]').addEventListener('submit', handleSubmit);
+  let resets = document.querySelectorAll('.resetform');
+  for (let i = 0; i < resets.length; i++) {
+    resets[i].addEventListener('click', function(event){
+        document.querySelector('[name="new-comment"]').classList.remove('comment-sent');
+        document.querySelector('[name="new-comment"] h2').innerHTML = 'Reply';
+        document.querySelector('[name="parent"]').value = 0;
+    });
+  }
+  let hooks = document.querySelectorAll('.reply-hook');
+  for (let i = 0; i < hooks.length; i++) {
+    hooks[i].addEventListener('click', function(event){
+        let el = event.target.parentNode.parentNode;
+        let author = el.querySelector(':scope .h-card .p-name').innerHTML;
+        document.querySelector('[name="new-comment"] h2').innerHTML = `Replying to ${author}`;
+        document.querySelector('[name="parent"]').value = el.id;
+    });
+  }
+</script>
+{% endif %}
 <form class="flow" id="webmention-form" method="post" action="https://webmention.io/cascading.space/webmention">
     <input type="hidden" name="target" value="{{ siteRoot + page.url }}">
-    <label for="reply-url">Have you mentioned this page somewhere? Share the link!</label>
+    <label for="reply-url">This website also supports <a href="https://indieweb.org/Webmention" target="_blank">Webmentions</a>! If your site doesn't send them automatically, you can send one to this page from here:</label>
     <div class="inputs flow">
-        <input type="text" id="reply-url" name="source" placeholder="https://example.com/my-post">
+        <input type="text" required id="reply-url" name="source" placeholder="https://example.com/my-post">
         <button type="submit" id="webmention-submit">Send Webmention</button>
     </div>
 </form>
-
-<details class="explainer">
-    <summary>The heck is all this?</summary>
-    <p>The interactions shown here all came either from people posting on their own websites using <a href="https://indieweb.org/Webmention" target="_blank">webmentions</a>, or gathered from public interactions on posts from Bluesky or Mastodon.</p>
-</details>

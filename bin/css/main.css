@@ -179,11 +179,22 @@ img.cascadehi {
         padding-block-end: 400px;
     }
 }
-/* Webmentions */
+/* Engagements */
 .mentions {
     grid-area: mentions;
     margin-block-start: 1em;
     border-block-start: 3px solid var(--dark-accent-bg);
+
+    form[name="new-comment"] .after-send { display: none; }
+    form[name="new-comment"].comment-sent {
+        > *:not(.after-send) {
+        visibility: hidden;
+        position: absolute;
+        left: -99999px; top: -99999px;
+        z-index: -99999;
+        }
+        .after-send { display: block; margin: 1em; }
+    }
     form {
         background-color: var(--accent-bg);
         border-radius: 15px;
@@ -198,10 +209,19 @@ img.cascadehi {
         padding: .5em 1em;
         border-radius: 15px;
     }
+    textarea {
+        display: block;
+        width: 100%;
+        border: 2px solid var(--text-color);
+        padding: .5em 1em;
+        border-radius: 15px;
+        min-height: 10em;
+    }
     button {
         border: 2px solid var(--text-color);
         padding: .5em 1em;
         border-radius: 15px;
+        + button { margin-inline-start: 1em; }
         &:hover, &:focus {
             background-color: var(--background-color);
         }
