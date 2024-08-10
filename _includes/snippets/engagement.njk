@@ -154,8 +154,8 @@
 </script>
 {% endif %}
 <form class="flow" id="webmention-form" method="post" action="https://webmention.io/cascading.space/webmention">
-    <input type="hidden" name="target" value="{{ siteRoot + page.url }}">
     <label for="reply-url">This website also supports <a href="https://indieweb.org/Webmention" target="_blank">Webmentions</a>! If your site doesn't send them automatically, you can send one to this page from here:</label>
+    <input type="hidden" name="target" value="{{ siteRoot + page.url }}">
     <div class="inputs flow">
         <input type="text" required id="reply-url" name="source" placeholder="https://example.com/my-post">
         <button type="submit" id="webmention-submit">Send Webmention</button>
