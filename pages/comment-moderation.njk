@@ -113,18 +113,9 @@ eleventyExcludeFromCollections: true
         document.querySelector('form [name="avatar"]').value = currentComment.data.avatar;
         document.querySelector('form [name="comment"]').value = currentComment.data.comment;
         document.querySelector('#comment-parent').innerHTML = parentHTML;
-        // Delete button
+        // Delete button takes you to form UI
         document.querySelector('#delete-comment').addEventListener('click', function(){
-            fetch(`${api_root}/submissions/${currentComment.id}`, {
-                method: 'DELETE',
-                headers: {
-                    'User-Agent': 'Comment Moderation using Forms API',
-                    'Authorization': `Bearer ${api_token}`
-                }
-            })
-            .then(() => console.log('Comment deleted.'))
-            .catch((error) => console.error(error));
-            document.querySelector('#buttons').innerHTML = 'Comment deleted!';
+            document.location = 'https://app.netlify.com/sites/precious-brioche-483ced/forms/66b6335471d4a60008fa2e4f';
         });
         // Approve button is default HTML behavior
     } else {
