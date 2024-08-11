@@ -1,6 +1,7 @@
 ---
 title: Colophon / Credits
 permalink: "/colophon/"
+nocomments: true
 ---
 
 # Colophon

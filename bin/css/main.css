@@ -57,6 +57,11 @@ main .e-content > *,
 main > *:not(article) {
     grid-column: main;
 }
+main .e-content > :last-child {
+    border-block-end: 3px solid var(--dark-accent-bg);
+    padding-block-end: 1em;
+    margin-block-end: 1em;
+}
 main .e-content > aside.sidebar {
     grid-column: sidebar;
     margin-left: 1.5em;
@@ -107,7 +112,7 @@ pre {
 .aboutme ul,
 main ul:not(.notlist) {
     list-style-type: disc;
-    margin-inline-start: 2em;
+    padding-inline-start: 2em;
 }
 main ol:not(.notlist) {
     list-style-type: decimal;
@@ -167,22 +172,24 @@ img.cascadehi {
     max-inline-size: 40ch;
     position: absolute;
     left: 45ch;
-    bottom: -44px;
+    bottom: -26px;
 }
-@media only screen and (max-width: 700px) {
+main:has(img.cascadehi) > :last-child {
+    padding-block-end: 2em;
+    border-block-end: 3px solid var(--dark-accent-bg);
+}
+@media only screen and (max-width: 780px) {
     img.cascadehi {
         left: 50%;
         transform: translateX(-50%);
     }
-    .container:has(img.cascadehi) {
-        padding-block-end: 400px;
+    main:has(img.cascadehi) > :last-child {
+        padding-block-end: 450px;
     }
 }
 /* Engagements */
 .mentions {
     grid-area: mentions;
-    margin-block-start: 1em;
-    border-block-start: 3px solid var(--dark-accent-bg);
 
     form[name="new-comment"] .after-send { display: none; }
     form[name="new-comment"].comment-sent {

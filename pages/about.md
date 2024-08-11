@@ -1,6 +1,7 @@
 ---
 title: About Me
 permalink: "/about/"
+nocomments: true
 ---
 
 # About

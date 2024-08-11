@@ -16,11 +16,13 @@
         {{ content | safe }}
 
     </main>
+    {% if not nocomments %}
     <section class="container flow mentions">
 
         {% include "snippets/engagement.njk" %}
 
     </section>
+    {% endif %}
     <footer class="container flow">
 
         {% include "snippets/footer.njk" %}
