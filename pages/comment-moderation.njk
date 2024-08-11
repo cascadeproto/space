@@ -7,46 +7,46 @@ eleventyExcludeFromCollections: true
 <h1>Comment Moderation</h1>
 
 <form class="flow comment-moderation" name="approved-comments" netlify netlify-honeypot="sweetgoods">
-<input type="hidden" name="form-name" value="approved-comments" />
-<p id="totalwaiting"></p>
-<p class="visually-hidden">Don't fill this out if you're human:
-    <input type="text" name="sweetgoods" />
-</p>
-<p><label>Comment ID:
-    <input type="text" name="comment_id" />
-</label></p>
-<p><label>IP address:
-    <input type="text" name="commenter_ip" />
-</label></p>
-<p><label>User Agent:
-    <input type="text" name="commenter_ua" />
-</label></p>
-<p><label>Page:
-    <input type="text" name="path" />
-</label></p>
-<p><label>Comment parent ID: <span id="comment-parent"></span>
-    <input type="text" name="parent" />
-</label></p>
-<p id="comment-parent"></p>
-<p><label>Name:
-    <input type="text" name="name" />
-</label></p>
-<p><label>URL:
-    <input type="text" name="url" />
-</label></p>
-<p><label>Avatar:
-    <input type="text" name="avatar" />
-</label></p>
-<p><label>Comment:
-    <textarea name="comment"></textarea>
-</label></p>
-<p><label>Password:
-    <input type="password" name="pass" />
-</label></p>
-<p id="buttons">
-    <button id="delete-comment">Delete</button>
-    <button id="approve-comment" type="submit">Approve</button>
-</p>
+    <p id="totalwaiting"></p>
+    <p class="visually-hidden">Don't fill this out if you're human:
+        <input type="text" name="sweetgoods" />
+    </p>
+    <p><label>Comment ID:
+        <input type="text" name="comment_id" />
+    </label></p>
+    <p><label>IP address:
+        <input type="text" name="commenter_ip" />
+    </label></p>
+    <p><label>User Agent:
+        <input type="text" name="commenter_ua" />
+    </label></p>
+    <p><label>Page:
+        <input type="text" name="path" />
+    </label></p>
+    <p><label>Comment parent ID: <span id="comment-parent"></span>
+        <input type="text" name="parent" />
+    </label></p>
+    <p id="comment-parent"></p>
+    <p><label>Name:
+        <input type="text" name="name" />
+    </label></p>
+    <p><label>URL:
+        <input type="text" name="url" />
+    </label></p>
+    <p><label>Avatar:
+        <input type="text" name="avatar" />
+    </label></p>
+    <p><label>Comment:
+        <textarea name="comment"></textarea>
+    </label></p>
+    <p><label>Password:
+        <input type="password" name="pass" />
+    </label></p>
+    <input type="hidden" name="form-name" value="approved-comments" />
+    <p id="buttons">
+        <button id="delete-comment">Delete</button>
+        <button id="approve-comment" type="submit">Approve</button>
+    </p>
 </form>
 
 <style>
