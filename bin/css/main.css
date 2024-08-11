@@ -35,7 +35,7 @@ body {
     margin-inline: 0;
     inline-size: 100%;
 }
-main.container {
+main {
     position: relative;
     display: grid;
     grid-template-columns: subgrid;

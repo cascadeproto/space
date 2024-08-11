@@ -9,11 +9,11 @@ function sortComments(a,b){
     let aDate, bDate;
     if (a.published) aDate = new Date(a.published);
     if (a["wm-received"]) aDate = new Date(a["wm-received"]);
-    if (a.created_at) aDate = new Date(a.created_at);
+    if (a.data) aDate = new Date(a.data.time);
 
     if (b.published) bDate = new Date(b.published);
     if (b["wm-received"]) bDate = new Date(b["wm-received"]);
-    if (b.created_at) bDate = new Date(b.created_at);
+    if (b.data) bDate = new Date(b.data.time);
 
     return aDate - bDate;
 }
@@ -51,18 +51,20 @@ function checkRedirects(target) {
 module.exports = async function(){
     const commentsurl = `https://api.netlify.com/api/v1/forms/${process.env.COMMENTS_FORM_ID}/submissions`;
     const url = `https://webmention.io/api/mentions.jf2?domain=cascading.space&token=${process.env.WEBMENTIONIO_TOKEN}`;
+    const opts = {
+        headers: {
+            'User-Agent': 'Comment Collector for cascading.space',
+            'Authorization': `Bearer ${process.env.NETLIFY_API_TOKEN}`
+        }
+    };
     
     try {
         const webmentionsresponse = await fetch(url);
-        const commentsresponse = await fetch(commentsurl, {
-            headers: {
-                'User-Agent': 'Comment Collector for cascading.space',
-                'Authorization': `Bearer ${process.env.NETLIFY_API_TOKEN}`
-            }
-        });
+        const commentsresponse = process.env.ELEVENTY_RUN_MODE === 'serve' ? await fetch(url) : await fetch(commentsurl, opts)
+        
         if (webmentionsresponse.ok && commentsresponse.ok) {
             let webmentions = await webmentionsresponse.json();
-            let comments = await commentsresponse.json();
+            let comments = process.env.ELEVENTY_RUN_MODE === 'serve' ? [] : await commentsresponse.json();
 
             let engagement = {
                 inReplyTo: [],
@@ -71,6 +73,7 @@ module.exports = async function(){
                 others: []
             };
 
+            // Webmention stuff
             webmentions.children.forEach(mention => {
                 mention.dataSource = 'webmentions';
                 mention.targetUrl = checkRedirects(mention["wm-target"]);
@@ -91,60 +94,63 @@ module.exports = async function(){
             engagement.repostOf.sort(sortByDate);
             engagement.others.sort(sortByDate);
 
-            let relationships = [];
+            // Comments stuff
+            if (comments.length) {
+                let relationships = [];
 
-            for (let i = 0; i < comments.length; i++) {
-                let comment = comments[i];
-                // Set default data
-                comment.dataSource = 'homemade';
-                comment.targetUrl = checkRedirects('https://cascading.space' + comment.data.path);
-                comment.data.avatar = comment.data.avatar ? comment.data.avatar : 'https://cascading.space/bin/img/blank-avatar.png';
-                comment.data.url = comment.data.url ? comment.data.url : false;
-                comment.nestingDepth = 1;
-                comment.hasParent = false;
-                comment.isParentOf = false;
-                // Scan and record relationships
-                if (Number(comment.data.parent) != 0) {
-                    comment.hasParent = true;
-                    comment.nestingDepth++;
-                    if (comments.find(o => o.data.comment_id === comment.data.parent).data.parent != 0) {
+                for (let i = 0; i < comments.length; i++) {
+                    let comment = comments[i];
+                    // Set default data
+                    comment.dataSource = 'homemade';
+                    comment.targetUrl = checkRedirects('https://cascading.space' + comment.data.path);
+                    comment.data.avatar = comment.data.avatar ? comment.data.avatar : 'https://cascading.space/bin/img/blank-avatar.png';
+                    comment.data.url = comment.data.url ? comment.data.url : false;
+                    comment.nestingDepth = 1;
+                    comment.hasParent = false;
+                    comment.isParentOf = false;
+                    // Scan and record relationships
+                    if (Number(comment.data.parent) != 0) {
+                        comment.hasParent = true;
                         comment.nestingDepth++;
-                    }
-                    relationships.push({
-                        depth: comment.nestingDepth,
-                        parent: comment.data.parent,
-                        child: comment.data.comment_id
-                    });
-                }
-                if (relationships.length) {
-                    relationships.forEach(relationship => {
-                        if (relationship.parent === comment.data.comment_id) {
-                            comment.isParentOf = relationship.child;
+                        if (comments.find(o => o.data.comment_id === comment.data.parent).data.parent != 0) {
+                            comment.nestingDepth++;
                         }
-                    });
+                        relationships.push({
+                            depth: comment.nestingDepth,
+                            parent: comment.data.parent,
+                            child: comment.data.comment_id
+                        });
+                    }
+                    if (relationships.length) {
+                        relationships.forEach(relationship => {
+                            if (relationship.parent === comment.data.comment_id) {
+                                comment.isParentOf = relationship.child;
+                            }
+                        });
+                    }
                 }
+
+                comments.sort(sortComments);
+
+                // Sort by relationships, one level of depth at a time
+                relationships.sort((a,b) => {
+                    if (a.depth < b.depth) { return -1; }
+                    else { return 1; }
+                });
+                relationships.forEach(relationship => {
+                    // Find child, make copy, and delete from array
+                    let childIndex = comments.indexOf(comments.find(o => o.data.comment_id === relationship.child));
+                    let child = comments.find(o => o.data.comment_id === relationship.child);
+                    comments.splice(childIndex, 1);
+                    // Get parent index and add child back into array directly after
+                    let parentIndex = comments.indexOf(comments.find(o => o.data.comment_id === relationship.parent));
+                    comments.splice(parentIndex + 1, 0, child);
+                });
+
+                comments.filter(comment => comment.data.pass === 'pickles').forEach(comment => {
+                    engagement.inReplyTo.push(comment);
+                });
             }
-
-            comments.sort(sortComments);
-
-            // Sort by relationships, one level of depth at a time
-            relationships.sort((a,b) => {
-                if (a.depth < b.depth) { return -1; }
-                else { return 1; }
-            });
-            relationships.forEach(relationship => {
-                // Find child, make copy, and delete from array
-                let childIndex = comments.indexOf(comments.find(o => o.data.comment_id === relationship.child));
-                let child = comments.find(o => o.data.comment_id === relationship.child);
-                comments.splice(childIndex, 1);
-                // Get parent index and add child back into array directly after
-                let parentIndex = comments.indexOf(comments.find(o => o.data.comment_id === relationship.parent));
-                comments.splice(parentIndex + 1, 0, child);
-            });
-
-            comments.filter(comment => comment.data.pass === 'pickles').forEach(comment => {
-                engagement.inReplyTo.push(comment);
-            });
 
             return engagement;
         }
