@@ -42,7 +42,7 @@ eleventyExcludeFromCollections: true
     <p><label>Password:
         <input type="password" name="pass" />
     </label></p>
-    <input type="hidden" name="form-name" value="approved-comments" />
+    
     <p id="buttons">
         <button id="delete-comment">Delete</button>
         <button id="approve-comment" type="submit">Approve</button>
@@ -118,6 +118,11 @@ eleventyExcludeFromCollections: true
             document.location = 'https://app.netlify.com/sites/precious-brioche-483ced/forms/66b6335471d4a60008fa2e4f';
         });
         // Approve button is default HTML behavior
+        document.querySelector('#approve-comment').addEventListener('click', function(e){
+            e.preventDefault();
+            document.querySelector('form[name="approved-comments"]').append('<input type="hidden" name="form-name" value="approved-comments" />');
+            e.submit();
+        })
     } else {
         console.warn(response);
     }
