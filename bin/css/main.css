@@ -57,11 +57,6 @@ main .e-content > *,
 main > *:not(article) {
     grid-column: main;
 }
-main .e-content > :last-child {
-    border-block-end: 3px solid var(--dark-accent-bg);
-    padding-block-end: 1em;
-    margin-block-end: 1em;
-}
 main .e-content > aside.sidebar {
     grid-column: sidebar;
     margin-left: 1.5em;
@@ -150,6 +145,11 @@ footer {
         margin-inline: auto;
     }
 }
+.likes-reposts {
+    background-color: var(--accent-bg);
+    border-radius: 15px;
+    padding: 1em;
+}
 img[usage="emoji"] {
     display: inline;
 }
@@ -190,6 +190,7 @@ main:has(img.cascadehi) > :last-child {
 /* Engagements */
 .mentions {
     grid-area: mentions;
+    margin-block-start: 1em;
 
     form[name="new-comment"] .after-send { display: none; }
     form[name="new-comment"].comment-sent {

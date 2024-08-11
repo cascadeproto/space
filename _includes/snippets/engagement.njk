@@ -1,4 +1,7 @@
 {% set mentions = engagement | getMentionsForUrl(siteRoot + page.url) %}
+
+{% if mentions.likeOf.length or mentions.repostOf.length %}
+<div class="likes-reposts">
 {# Likes #}
 <details class="likes{% if not mentions.likeOf.length %} empty{% endif %}" open="">
     <summary>{{ mentions.likeOf.length }} {% if mentions.likeOf.length == 1 %}Like{% else %}Likes{% endif %}</summary>
@@ -28,6 +31,8 @@
         {% endfor %}
     </ul>
 </details>
+</div>
+{% endif %}
 
 {# Comments #}
 {% if mentions.inReplyTo.length %}
@@ -152,7 +157,7 @@
   }
 </script>
 <form class="flow" id="webmention-form" method="post" action="https://webmention.io/cascading.space/webmention">
-    <label for="reply-url">This website also supports <a href="https://indieweb.org/Webmention" target="_blank">Webmentions</a>! If your site doesn't send them automatically, you can send one to this page from here:</label>
+    <label for="reply-url">This website supports <a href="https://indieweb.org/Webmention" target="_blank">Webmentions</a>! If your site doesn't send them automatically, you can send one to this page from here:</label>
     <input type="hidden" name="target" value="{{ siteRoot + page.url }}">
     <div class="inputs flow">
         <input type="text" required id="reply-url" name="source" placeholder="https://example.com/my-post">
