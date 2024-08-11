@@ -118,7 +118,7 @@ layout: raw.njk
         document.querySelector('form [name="name"]').value = currentComment.data.name;
         document.querySelector('form [name="url"]').value = currentComment.data.url;
         document.querySelector('form [name="avatar"]').value = currentComment.data.avatar;
-        document.querySelector('form [name="comment"]').value = currentComment.data.comment;
+        document.querySelector('form [name="comment"]').innerHTML = currentComment.data.comment;
         // Approve button is default HTML behavior
         // build hook url for new comments: https://api.netlify.com/build_hooks/66b6a49ba5564d902a2675e4
     } else {
