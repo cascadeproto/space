@@ -27,7 +27,7 @@ layout: raw.njk
     <p><label>Page:
         <input type="text" name="path" />
     </label></p>
-    <p><label>Comment parent ID: <span id="comment-parent"></span>
+    <p><label>Comment parent ID:
         <input type="text" name="parent" />
     </label></p>
     <p id="comment-parent"></p>
@@ -40,8 +40,10 @@ layout: raw.njk
     <p><label>Avatar:
         <input type="text" name="avatar" />
     </label></p>
-    <p><label>Comment:
-        <textarea name="comment"></textarea>
+    <p><strong>Comment:</strong></p>
+    <p id="comment"></p>
+    <p><label>Manual comment field:
+        <textarea type="text" name="comment"></textarea>
     </label></p>
     <p><label>Password:
         <input type="password" name="pass" />
@@ -118,9 +120,26 @@ layout: raw.njk
         document.querySelector('form [name="name"]').value = currentComment.data.name;
         document.querySelector('form [name="url"]').value = currentComment.data.url;
         document.querySelector('form [name="avatar"]').value = currentComment.data.avatar;
-        document.querySelector('form [name="comment"]').innerHTML = currentComment.data.comment;
+        document.querySelector('form [id="comment"]').innerHTML = currentComment.data.comment;
         // Approve button is default HTML behavior
         // build hook url for new comments: https://api.netlify.com/build_hooks/66b6a49ba5564d902a2675e4
+        modform.addEventListener('submit', function(event){
+            event.preventDefault();
+
+            const myForm = event.target;
+            const formData = new FormData(myForm);
+
+            fetch("/", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString(),
+            })
+            .then(() => {
+                console.log("Form successfully submitted");
+                myForm.reset();
+            })
+            .catch((error) => alert(error));
+        });
     } else {
         console.warn(response);
     }
