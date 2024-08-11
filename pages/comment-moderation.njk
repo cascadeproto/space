@@ -132,7 +132,6 @@ eleventyExcludeFromCollections: true
             const form = event.target;
             const data = new FormData(form);
 
-            // Only delete from queue once approval is successful
             fetch('/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -140,16 +139,6 @@ eleventyExcludeFromCollections: true
             })
             .then(() => {
                 console.log('Form submitted!');
-
-                fetch(`${api_root}/submissions/${currentComment.id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'User-Agent': 'Comment Moderation using Forms API',
-                        'Authorization': `Bearer ${api_token}`
-                    }
-                })
-                .then(() => console.log('Comment deleted.'))
-                .catch((error) => console.error(error));
 
             })
             .catch((error) => alert(error));
