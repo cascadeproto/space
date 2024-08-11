@@ -41,7 +41,7 @@ layout: raw.njk
         <input type="text" name="avatar" />
     </label></p>
     <p><strong>Comment:</strong></p>
-    <p id="comment"></p>
+    <p><pre><code id="comment"></code></pre></p>
     <p><label>Manual comment field:
         <textarea type="text" name="comment"></textarea>
     </label></p>
@@ -69,6 +69,9 @@ layout: raw.njk
     }
     .comment-moderation textarea {
         min-height: 15em;
+    }
+    .comment-moderation pre code {
+        white-space: pre-wrap;
     }
     .comment-moderation button {
         background-color: blue;
