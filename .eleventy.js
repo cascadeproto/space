@@ -30,6 +30,7 @@ module.exports = function (eleventyConfig) {
     eleventyConfig.addGlobalData('siteRoot', 'https://cascading.space');
     eleventyConfig.addPassthroughCopy('bin');
     eleventyConfig.addPassthroughCopy('img');
+    eleventyConfig.addPassthroughCopy('.well-known');
 
     // Combining the dates from front matter and the dates from
     // APIs to make new, sorted collections

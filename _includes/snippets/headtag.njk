@@ -2,7 +2,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-<link rel="dns-prefetch" href="https://cdn.protogen.gg/" />
+<link rel="dns-prefetch" href="https://cdn.protogen.gg/">
 
 {% if post.title %}{% set sharetitle = post.title | safe %}{% else %}{% set sharetitle = title %}{% endif %}
 {% if category == 'Article' or post.category == 'Article' %}{% set sharetype = 'article' %}{% else %}{% set sharetype = 'website' %}{% endif %}
@@ -36,6 +36,7 @@
 <meta name="author" content="Cascade the Protogen (cascade@cascading.space)">
 <meta name="generator" content="{{ eleventy.generator }}">
 
+<link rel="me fursona" href="https://cascading.space/.well-known/fursona">
 <link rel="me" href="mailto:cascade@cascading.space">
 <link rel="me" href="https://furry.engineer/@cascade">
 <link rel="me" href="https://bsky.app/profile/cascading.space">

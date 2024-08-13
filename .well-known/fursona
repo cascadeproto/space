@@ -1,0 +1,46 @@
+{
+    "sonas": [
+        {
+            "name": "Cascade",
+            "pronouns": "Any/All",
+            "gender": "Nonbinary",
+            "species": "Protogen",
+            "description": "So deep into webdev that they're interested in like, the philosophy and values of the open web. Also very into cosplaying. The tail is modular.",
+            "ref": "https://cascading.space/bin/img/cascade-v0.2-ref.png",
+            "refAlt": "Ref sheet of Cascade the Protogen. They have two sets of ears. They have orange fur, with black fur on the arms, legs, ears, and tail tip. The paw pads are off-white. If wearing protogen armor, the small screens by default show a mark made up of these characters, intended to look like HTML tag brackets: /_/\\",
+            "avatar": "https://cascading.space/bin/img/cascade-icon.jpeg",
+            "avatarAlt": "Avatar of Cascade, surrounded by waffles and pancakes with a confused, lost look.",
+            "age": 33,
+            "birthdate": "1990-11-13T15:17:00.000Z",
+            "colors": [
+                "#df5b22",
+                "#363636",
+                "#dad5d4",
+                "#797979",
+                "#d9ac74",
+                "#1a1a1a"
+            ]
+        },
+        {
+            "name": "Suika",
+            "pronouns": "She/Her",
+            "gender": "Female",
+            "species": "Watermelon Dog",
+            "description": "Happy, fruity sort that loves partying and being around people.",
+            "ref": "https://cascading.space/bin/img/suika-ref.png",
+            "refAlt": "Ref sheet of Suika. Her theme is watermelons. She has mostly green fur with occasional lighter green stripes. Her belly is white, outlined in the light green. Her hands, feet, tail tip, face, and inner ears are mostly red, followed by stripes of pink, then white. The red parts have black spots that look like seeds. Her hair and tongue are light green, and her eyes are yellow, with red pupils.",
+            "avatar": "https://cascading.space/bin/img/suika-avatar.png",
+            "avatarAlt": "Suika peeking up from the bottom of the frame, smiling with her tongue out.",
+            "age": 23,
+            "colors": [
+                "#009f38",
+                "#aaf631",
+                "#ffffff",
+                "#ffb5e8",
+                "#f94d63",
+                "#161417",
+                "#f7db6d"
+            ]
+        }
+    ]
+}
