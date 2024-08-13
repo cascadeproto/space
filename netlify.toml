@@ -2,6 +2,15 @@
     function = "block-bots"
     path = "/*"
 
+[[headers]]
+    for = "/.well-known/*"
+    [headers.values]
+        Access-Control-Allow-Origin = "*"
+
+
+
+
+
 [[redirects]]
     from = "/contact"
     to = "/about/#contact"
