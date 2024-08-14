@@ -1,0 +1,30 @@
+[
+    {
+      "name": "IndieWeb Webring",
+      "root": "https://xn--sr8hvo.ws",
+      "prevpath": "/previous",
+      "nextpath": "/next",
+      "note": ""
+    },
+    {
+      "name": "Fediring",
+      "root": "https://fediring.net",
+      "prevpath": "/previous?host=cascading.space",
+      "nextpath": "/next?host=cascading.space",
+      "note": ""
+    },
+    {
+      "name": "no ai webring",
+      "root": "https://baccyflap.com/noai",
+      "prevpath": "/?prv&s=cas",
+      "nextpath": "/?nxt&s=cas",
+      "note": "<a href=\"/ai\">(?)</a>"
+    },
+    {
+      "name": "bucket webring!",
+      "root": "https://webring.bucketfish.me",
+      "prevpath": "/redirect.html?to=prev&name=cascading.space",
+      "nextpath": "/redirect.html?to=next&name=cascading.space",
+      "note": ""
+    }
+  ]

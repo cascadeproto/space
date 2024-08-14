@@ -1,0 +1,10 @@
+<div class="webrings">
+    {% for ring in webrings %}
+    <p>
+        <a target="_blank" href="{{ ring.root }}{{ ring.prevpath }}">&lt;--</a>
+        <a target="_blank" href="{{ ring.root }}">{{ ring.name }}</a>
+        <a target="_blank" href="{{ ring.root }}{{ ring.nextpath }}">--&gt;</a>
+        {{ ring.note | safe }}
+    </p>
+    {% endfor %}
+</p>
