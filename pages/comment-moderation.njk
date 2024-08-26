@@ -94,11 +94,14 @@ nocomments: true
     const params = new URLSearchParams(document.location.search);
     const review_id = params.get('comment');
 
-    async function getHash(email) {
-        let cleanEmail = email.trim().toLowerCase();
-        const hash = await window.crypto.subtle.digest('SHA-256', email);
-        console.log('Hash in function: ' + hash);
-        return hash;
+    async function getHash(message) {
+        const msgUint8 = new TextEncoder().encode(message); // encode as (utf-8) Uint8Array
+        const hashBuffer = await window.crypto.subtle.digest("SHA-256", msgUint8); // hash the message
+        const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
+        const hashHex = hashArray
+            .map((b) => b.toString(16).padStart(2, "0"))
+            .join(""); // convert bytes to hex string
+        return hashHex;
     }
 
     document.querySelector('#get-comments').addEventListener('click', async function(e){
@@ -149,12 +152,12 @@ nocomments: true
             console.error(error);
         }
     });
-    document.querySelector('#avatar-check').addEventListener('click', async function(e){
+    document.querySelector('#avatar-check').addEventListener('click', function(e){
         e.preventDefault();
         const img = document.querySelector('#avatar-preview');
         let email = document.querySelector('form [name="email"]').value;
         console.log('Hashing: ' + email);
-        getHash(email).then(hash => {
+        getHash(email).then((hash) => {
             console.log('Hash: ' + hash);
             img.src = `https://www.gravatar.com/avatar/${hash}`;
         })
