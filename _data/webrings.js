@@ -67,7 +67,6 @@ module.exports = async function(){
     }
 
     // After all webrings are built
-    console.log(webrings);
     return webrings;
 
   } catch (err) {

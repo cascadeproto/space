@@ -52,13 +52,15 @@ const botUas = [
 
     console.log("Headers: " + JSON.stringify(request.headers));
     console.log("User agent: " + ua);
-  
-    botUas.forEach(u => {
-      if (ua.toLowerCase().includes(u.toLowerCase())) {
-        isBot = true
+
+    if (ua) {
+      botUas.forEach(u => {
+        if (ua.toLowerCase().includes(u.toLowerCase())) {
+          isBot = true;
           console.log("It's a bot!");
-      }
-    });
+        }
+      });
+    }
   
     const response = isBot ? new Response(null, { status: 401 }) : await context.next();
     return response;
