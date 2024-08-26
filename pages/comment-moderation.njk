@@ -38,9 +38,13 @@ nocomments: true
     <p><label>URL:
         <input type="text" name="url" />
     </label></p>
-    <p><label>Avatar:
-        <input type="text" name="avatar" />
-    </label></p>
+    <p>
+        <label>Email:
+            <input type="text" name="email" />
+        </label>
+        <a id="avatar-check">Check avatar</a>
+        <img src="#" id="avatar-preview" notransform />
+    </p>
     <p><strong>Comment:</strong></p>
     <p><pre><code id="comment"></code></pre></p>
     <p><label>Manual comment field:
@@ -90,6 +94,13 @@ nocomments: true
     const params = new URLSearchParams(document.location.search);
     const review_id = params.get('comment');
 
+    async function getHash(email) {
+        let cleanEmail = email.trim().toLowerCase();
+        const hash = await window.crypto.subtle.digest('SHA-256', email);
+        console.log('Hash in function: ' + hash);
+        return hash;
+    }
+
     document.querySelector('#get-comments').addEventListener('click', async function(e){
         e.preventDefault();
         const pass = document.querySelector('form [name="pass"]').value;
@@ -126,7 +137,7 @@ nocomments: true
                     document.querySelector('form [name="parent"]').value = currentComment.data.parent;
                     document.querySelector('form [name="name"]').value = currentComment.data.name;
                     document.querySelector('form [name="url"]').value = currentComment.data.url;
-                    document.querySelector('form [name="avatar"]').value = currentComment.data.avatar;
+                    document.querySelector('form [name="email"]').value = currentComment.data.email;
                     document.querySelector('form [id="comment"]').innerHTML = currentComment.data.comment;
                 }
             } else {
@@ -138,4 +149,17 @@ nocomments: true
             console.error(error);
         }
     });
+    document.querySelector('#avatar-check').addEventListener('click', async function(e){
+        e.preventDefault();
+        const img = document.querySelector('#avatar-preview');
+        let email = document.querySelector('form [name="email"]').value;
+        console.log('Hashing: ' + email);
+        getHash(email).then(hash => {
+            console.log('Hash: ' + hash);
+            img.src = `https://www.gravatar.com/avatar/${hash}`;
+        })
+        .catch(err => {
+            console.error(err);
+        });
+    })
 </script>
