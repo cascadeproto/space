@@ -50,7 +50,7 @@ function checkRedirects(target) {
 
 module.exports = async function(){
     const commentsurl = `https://api.netlify.com/api/v1/forms/${process.env.COMMENTS_FORM_ID}/submissions`;
-    const url = `https://webmention.io/api/mentions.jf2?domain=cascading.space&token=${process.env.WEBMENTIONIO_TOKEN}`;
+    const webmentionsurl = `https://webmention.io/api/mentions.jf2?domain=cascading.space&token=${process.env.WEBMENTIONIO_TOKEN}`;
     const opts = {
         headers: {
             'User-Agent': 'Comment Collector for cascading.space',
@@ -59,21 +59,23 @@ module.exports = async function(){
     };
     
     try {
-        const webmentionsresponse = await fetch(url);
-        const commentsresponse = process.env.ELEVENTY_RUN_MODE === 'serve' ? await fetch(url) : await fetch(commentsurl, opts)
-        
-        if (webmentionsresponse.ok && commentsresponse.ok) {
+        const webmentionsresponse = await fetch(webmentionsurl);
+        const commentsresponse = await fetch(commentsurl, opts)
+        console.log(`Webmention.io: ${webmentionsresponse.status}`);
+        console.log(`Netlify Form: ${commentsresponse.status}`);
+
+        let engagement = {
+            inReplyTo: [],
+            likeOf: [],
+            repostOf: [],
+            others: []
+        };
+
+        // Webmentions
+        if (webmentionsresponse.ok) {
             let webmentions = await webmentionsresponse.json();
-            let comments = process.env.ELEVENTY_RUN_MODE === 'serve' ? [] : await commentsresponse.json();
 
-            let engagement = {
-                inReplyTo: [],
-                likeOf: [],
-                repostOf: [],
-                others: []
-            };
-
-            // Webmention stuff
+            
             webmentions.children.forEach(mention => {
                 mention.dataSource = 'webmentions';
                 mention.targetUrl = checkRedirects(mention["wm-target"]);
@@ -93,8 +95,14 @@ module.exports = async function(){
             engagement.likeOf.sort(sortByDate);
             engagement.repostOf.sort(sortByDate);
             engagement.others.sort(sortByDate);
+        } else {
+            console.warn('Webmention.io API Response:');
+            console.warn(webmentionsresponse);
+        }
 
-            // Comments stuff
+        // Comments
+        if (commentsresponse.ok) {
+            let comments = await commentsresponse.json();
             if (comments.length) {
                 let relationships = [];
 
@@ -147,16 +155,17 @@ module.exports = async function(){
                     comments.splice(parentIndex + 1, 0, child);
                 });
 
-                //comments.filter(comment => comment.data.pass == process.env.NETLIFY_API_TOKEN).forEach(comment => {
-                    engagement.inReplyTo.push(comments);
-                //});
-            } else {
-                console.log('No native comments found.');
+                comments.filter(comment => comment.data.pass === process.env.NETLIFY_API_TOKEN).forEach(comment => {
+                    engagement.inReplyTo.push(comment);
+                });
             }
-
-            console.log(engagement);
-            return engagement;
+        } else {
+            console.warn('Netlify Forms API Response:');
+            console.warn(commentsresponse);
         }
+
+        return engagement;
+
     } catch (err) {
         console.error(err);
         return null;
