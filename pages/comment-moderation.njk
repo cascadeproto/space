@@ -93,7 +93,6 @@ nocomments: true
     document.querySelector('#get-comments').addEventListener('click', async function(e){
         e.preventDefault();
         const pass = document.querySelector('form [name="pass"]').value;
-        console.log(`Pass: ${pass}`);
         try {
             const request = await fetch('https://api.netlify.com/api/v1/forms/66b6335471d4a60008fa2e4f/submissions', {
                 headers: {
@@ -101,7 +100,6 @@ nocomments: true
                     'Authorization': `Bearer ${pass}`
                 }
             });
-            console.log(`Response Status: ${request.status}`);
             if (request.ok) {
                 const data = await request.json();
                 console.log(data);
@@ -134,6 +132,7 @@ nocomments: true
             } else {
                 console.error('Request:')
                 console.error(request);
+                console.error(request.text());
             }
         } catch (error) {
             console.error(error);
