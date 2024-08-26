@@ -147,11 +147,14 @@ module.exports = async function(){
                     comments.splice(parentIndex + 1, 0, child);
                 });
 
-                // comments.filter(comment => comment.data.pass == process.env.NETLIFY_API_TOKEN).forEach(comment => {
-                //     engagement.inReplyTo.push(comment);
-                // });
+                //comments.filter(comment => comment.data.pass == process.env.NETLIFY_API_TOKEN).forEach(comment => {
+                    engagement.inReplyTo.push(comments);
+                //});
+            } else {
+                console.log('No native comments found.');
             }
 
+            console.log(engagement);
             return engagement;
         }
     } catch (err) {
