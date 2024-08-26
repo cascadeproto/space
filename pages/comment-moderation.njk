@@ -90,8 +90,10 @@ nocomments: true
     const params = new URLSearchParams(document.location.search);
     const review_id = params.get('comment');
 
-    document.querySelector('#get-comments').addEventListener('click', async function(){
+    document.querySelector('#get-comments').addEventListener('click', async function(e){
+        e.preventDefault();
         const pass = document.querySelector('form [name="pass"]').value;
+        console.log(`Pass: ${pass}`);
         try {
             const request = await fetch('https://api.netlify.com/api/v1/forms/66b6335471d4a60008fa2e4f/submissions', {
                 headers: {
@@ -99,6 +101,7 @@ nocomments: true
                     'Authorization': `Bearer ${pass}`
                 }
             });
+            console.log(`Response Status: ${request.status}`);
             if (request.ok) {
                 const data = await request.json();
                 console.log(data);
@@ -128,6 +131,9 @@ nocomments: true
                     document.querySelector('form [name="avatar"]').value = currentComment.data.avatar;
                     document.querySelector('form [id="comment"]').innerHTML = currentComment.data.comment;
                 }
+            } else {
+                console.error('Request:')
+                console.error(request);
             }
         } catch (error) {
             console.error(error);
