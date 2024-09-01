@@ -76,10 +76,10 @@ module.exports = async function(){
             function getMediaUrl(id){
                 let mediaItem = media.find(o => o.id === id);
                 return {
-                    url: mediaItem.source_url,
-                    alttext: mediaItem.alt_text,
-                    width: mediaItem.media_details.sizes.full.width,
-                    height: mediaItem.media_details.sizes.full.height
+                    url: mediaItem.source_url ? mediaItem.source_url : '',
+                    alttext: mediaItem.alt_text ? mediaItem.alt_text : '',
+                    width: mediaItem.media_details.sizes.full.width ? mediaItem.media_details.sizes.full.width : '',
+                    height: mediaItem.media_details.sizes.full.height ? mediaItem.media_details.sizes.full.height : ''
                 }
             }
 
