@@ -6,7 +6,7 @@
     "title": "cascading.space",
     "subtitle": "Cascade's Recent Rambles",
     "language": "en",
-    "url": "https://cascading.space/",
+    "url": "https://cascading.space/?source=RSS",
     "author": {
       "name": "Cascade",
       "email": "cascade@cascading.space"
@@ -26,7 +26,7 @@
     {%- set absolutePostUrl = post.url | absoluteUrl(metadata.url) %}
     <item>
       <title>{% if not post.data.post.title %}{{ post.data.title | safe }}{% else %}{{ post.data.post.title | safe }}{% endif %}</title>
-      <link>{{ absolutePostUrl }}</link>
+      <link>{{ absolutePostUrl }}?source=RSS</link>
       <description>{{ post.templateContent | htmlToAbsoluteUrls(absolutePostUrl) }}</description>
       <pubDate>{{ post.date | dateToRfc822 }}</pubDate>
       <dc:creator>{{ metadata.author.name }}</dc:creator>

@@ -13,44 +13,44 @@
 
 [[redirects]]
     from = "/contact"
-    to = "/about/#contact"
+    to = "/about/?source=Netlify+Redirect#contact"
 
 [[redirects]]
     from = "/hello"
-    to = "/about/"
+    to = "/about/?source=Netlify+Redirect"
 
 [[redirects]]
     from = "/why"
-    to = "/about/#why"
+    to = "/about/?source=Netlify+Redirect#why"
 
 [[redirects]]
     from = "/interests"
-    to = "/about/#interests"
+    to = "/about/?source=Netlify+Redirect#interests"
 
 [[redirects]]
     from = "/ai"
-    to = "/about/#ai"
+    to = "/about/?source=Netlify+Redirect#ai"
 
 [[redirects]]
     from = "/credits"
-    to = "/colophon"
+    to = "/colophon/?source=Netlify+Redirect"
 
 [[redirects]]
     from = "/post/165"
-    to = "/post/proper-introductions-and-happy-blaugust"
+    to = "/post/proper-introductions-and-happy-blaugust/?source=Netlify+Redirect"
 
 [[redirects]]
     from = "/post/172"
-    to = "/post/its-headless-👻"
+    to = "/post/its-headless-👻/?source=Netlify+Redirect"
 
 [[redirects]]
     from = "/post/177"
-    to = "/post/journals"
+    to = "/post/journals/?source=Netlify+Redirect"
 
 [[redirects]]
     from = "/post/194"
-    to = "/post/eleventy-lessons-learned"
+    to = "/post/eleventy-lessons-learned/?source=Netlify+Redirect"
 
 [[redirects]]
     from = "/post/200"
-    to = "/post/a-saga-of-light-and-darkness"
+    to = "/post/a-saga-of-light-and-darkness/?source=Netlify+Redirect"
