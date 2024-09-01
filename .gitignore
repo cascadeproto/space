@@ -1,5 +1,6 @@
 /__static
 /.cache
+/.schemas
 /.vscode
 /node_modules
 .env
