@@ -53,6 +53,15 @@ main .e-content {
     grid-template-columns: subgrid;
     grid-column: main-start / sidebar-end;
 }
+main .e-content {
+    & > :has(sup:target),
+    .footnotes :target {
+        outline-color: light-dark(rgba(162, 105, 31, 0.4), rgba(232, 168, 168, 0.4));
+        outline-offset: 6px;
+        outline-style: solid;
+        outline-width: 5px;
+    }
+}
 main .e-content > *,
 main > *:not(article) {
     grid-column: main;
