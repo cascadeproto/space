@@ -63,9 +63,10 @@ module.exports = function (eleventyConfig) {
     });
     eleventyConfig.addFilter("excerpt", (post) => {
         const content = post.replace(/(<([^>]+)>)/gi, "");
-        return content;//.substr(0, content.lastIndexOf(" ", 200)) + "...";
+        return content;
     });
 
+    // Image Caching and Transform
     eleventyConfig.addTransform('imgTransform', async function(content){
         const imgRegex = /<img(.*?)>/gs;
         const srcRegex = /src="(.*?)"/g;
@@ -80,7 +81,7 @@ module.exports = function (eleventyConfig) {
                 let newContent = content;
 
                 // Future note: A forEach loop wasn't working. forEach isn't asyncronous, so
-                // the return statement wasn't waiting for the Promises within to resolve. A
+                // the return statement wasn't waiting for the promises within to resolve. A
                 // plain for loop saved the day!
                 for (let i = 0; i < matches.length; i++) {
                     if (!matches[i].match('notransform')) {

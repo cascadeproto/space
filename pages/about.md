@@ -59,4 +59,4 @@ The easiest, fastest way to get in touch is to message me on [Telegram](https://
 
 You can also [email me](mailto:cascade@cascading.space). I even have a [PGP key](/bin/cascade-pgp.txt) if you're into that.
 
-If you'd rather just watch and see what I get up to, you can follow this site's RSS feed, or follow me on [Bluesky](https://bsky.app/profile/cascading.space) or the [fediverse app of your choice](https://furry.engineer/@cascade).
+If you'd rather just watch and see what I get up to, you can follow this site's [RSS feed](/feed.xml), or follow me on [Bluesky](https://bsky.app/profile/cascading.space) or the [fediverse app of your choice](https://furry.engineer/@cascade).

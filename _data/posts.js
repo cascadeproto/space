@@ -14,9 +14,9 @@ module.exports = async function(){
 
     function cleanHtml(rawHtml, endUrl){
         // Clean new lines
-        let html = rawHtml;//.replaceAll(`\n`, ``); Maybe this isn't necessary - it breaks <code> and <pre> blocks to just wipe all newlines...
+        let html = rawHtml;
     
-        // Clean images
+        // Clean image markup, prepare for image transform after render
         let images = [];
         let figureTags = /<figure(.*?)<\/figure>+/g;
         let imgRegex = /src="(.*?)"/g;

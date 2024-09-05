@@ -46,9 +46,9 @@ module.exports = async function(){
   const crittersURL = 'https://critterweb.net/api/rings/critters.json';
 
   try {
-    const crittersResponse = await fetch(crittersURL);
 
-    // Internet Critters Webring (separate if statements for each new ring)
+    // Internet Critters Webring (different if-statements for each new ring)
+    const crittersResponse = await fetch(crittersURL);
     if (crittersResponse.ok) {
       const critters = await crittersResponse.json();
       const myCritterIndex = critters.members.findIndex(o => o.name === "Cascade");
