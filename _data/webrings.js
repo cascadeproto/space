@@ -46,6 +46,13 @@ module.exports = async function(){
       prevpath: "https://keithhacks.cyou/furryring.php?prev=cascading.space",
       nextpath: "https://keithhacks.cyou/furryring.php?next=cascading.space",
       note: ""
+    },
+    {
+      name: "roboring",
+      mainpath: "https://stellophiliac.github.io/roboring",
+      prevpath: "https://stellophiliac.github.io/roboring/cascade/previous",
+      nextpath: "https://stellophiliac.github.io/roboring/cascade/next",
+      note: ""
     }
   ];
 
