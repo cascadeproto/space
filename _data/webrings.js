@@ -39,6 +39,13 @@ module.exports = async function(){
       prevpath: "https://webring.bucketfish.me/redirect.html?to=prev&name=cascading.space",
       nextpath: "https://webring.bucketfish.me/redirect.html?to=next&name=cascading.space",
       note: ""
+    },
+    {
+      name: "Furryring",
+      mainpath: "https://keithhacks.cyou/furryring.php",
+      prevpath: "https://keithhacks.cyou/furryring.php?prev=cascading.space",
+      nextpath: "https://keithhacks.cyou/furryring.php?next=cascading.space",
+      note: ""
     }
   ];
 
