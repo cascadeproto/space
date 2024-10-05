@@ -19,6 +19,7 @@ function sortComments(a,b){
 }
 
 function checkRedirects(target) {
+    let url = target.split('?');
     const redirects = [
         {
             from: 'https://cascading.space/post/165',
@@ -41,10 +42,10 @@ function checkRedirects(target) {
             to: 'https://cascading.space/post/a-saga-of-light-and-darkness'
         }
     ];
-    if (redirects.find(o => o.from === target)) {
-        return redirects.find(o => o.from === target).to;
+    if (redirects.find(o => o.from === url[0])) {
+        return redirects.find(o => o.from === url[0]).to;
     } else {
-        return target;
+        return url[0];
     }
 }
 
@@ -95,6 +96,8 @@ module.exports = async function(){
             engagement.likeOf.sort(sortByDate);
             engagement.repostOf.sort(sortByDate);
             engagement.others.sort(sortByDate);
+
+            console.log(engagement.likeOf);
         } else {
             console.warn('Webmention.io API Response:');
             console.warn(webmentionsresponse);
