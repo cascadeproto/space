@@ -25,7 +25,7 @@
     {%- for post in collections.all | reverse %}
     {%- set absolutePostUrl = post.url | absoluteUrl(metadata.url) %}
     <item>
-      <title>{% if not post.data.post.title %}{{ post.data.title | safe }}{% else %}{{ post.data.post.title | safe }}{% endif %}</title>
+      <title>{{ post.data.title | safe }}</title>
       <link>{{ absolutePostUrl }}?source=RSS</link>
       <description>{{ post.templateContent | htmlToAbsoluteUrls(absolutePostUrl) }}</description>
       <pubDate>{{ post.date | dateToRfc822 }}</pubDate>

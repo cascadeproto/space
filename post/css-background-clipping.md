@@ -11,8 +11,6 @@ date: 2024-09-20
 category: Article
 ---
 
-# Background Clipping
-
 There's a little-used property in CSS called `background-clip`. There's many other properties that adjust how backgrounds look. These can let you do things like change the color, add images, resize them, move them around, etc. What `background-clip` focuses on is where the edges of the viewable background are trimmed.
 
 In it's usual use cases, you give it CSS box model values like `content-box` or `border-box`, which cut off the background right where the edges of the content are and where the outside edges of the border are, respectively. For all the possible values, check a source like [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip#syntax).

@@ -4,14 +4,12 @@
 
 <link rel="dns-prefetch" href="https://cdn.protogen.gg/">
 
-{% if post.title %}{% set sharetitle = post.title | safe %}{% else %}{% set sharetitle = title %}{% endif %}
-{% if category == 'Article' or post.category == 'Article' %}{% set sharetype = 'article' %}{% else %}{% set sharetype = 'website' %}{% endif %}
-{% if post.featuredImage %}{% set shareimage = post.featuredImage %}{% else %}{% set shareimage = '/bin/img/cascade-icon.jpeg' %}{% endif %}
+{% set sharetitle = title %}
+{% if category == 'Article' %}{% set sharetype = 'article' %}{% else %}{% set sharetype = 'website' %}{% endif %}
+{% if featuredimage %}{% set shareimage = featuredimage %}{% else %}{% set shareimage = '/bin/img/cascade-icon.jpeg' %}{% endif %}
 {% set shareurl = ['https://cascading.space', page.url] | join %}
-{% if category == 'Article' or post.category == 'Article' %}
-    {% if post.excerpt %}
-        {% set sharedesc = post.excerpt | excerpt | safe %}
-    {% else %}
+{% if category == 'Article' %}
+    {% if excerpt %}
         {% set sharedesc = excerpt | excerpt | safe %}
     {% endif %}
 {% else %}

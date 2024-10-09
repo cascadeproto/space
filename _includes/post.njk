@@ -7,16 +7,16 @@ layout: base.njk
         {% if reply %}<p>In reply to: <a class="u-in-reply-to" href="{{ reply }}">{{ reply }}</a></p>{% endif %}
         {% if like %}<p>Like of: <a class="u-like-of" href="{{ like }}">{{ like }}</a></p>{% endif %}
         {% if repost %}<p>Repost of: <a class="u-repost-of" href="{{ repost }}">{{ repost }}</a></p>{% endif %}
-        {% if post.excerpt %}<blockquote><p class="p-summary">{{ post.excerpt | safe }}</p></blockquote>{% else %}<blockquote><p class="p-summary">{{ excerpt | safe }}</p></blockquote>{% endif %}
+        {% if excerpt %}<blockquote><p class="p-summary">{{ excerpt }}</p></blockquote>{% endif %}
         {% if bskyLink or mastoLink %}
             <p>This post was shared
                 {% if bskyLink %} <a href="{{ bskyLink }}">here</a>{% if mastoLink %} and{% endif %}{% endif %}
                 {% if mastoLink %} <a href="{{ mastoLink }}">here</a>{% endif %}</p>
         {% endif %}
-        {% if post.tags %}<ul class="tags">{% for tag in post.tags %}<li class="p-category">{{ tag }}</li>{% endfor %}</ul>{% endif %}
+        {% if tags %}<ul class="tags">{% for tag in tags %}<li class="p-category">{{ tag }}</li>{% endfor %}</ul>{% endif %}
     </div>
     <div class="e-content flow">
-        <h1 class="p-name">{{ post.title | safe }}</h1>
+        <h1 class="p-name">{{ title }}</h1>
 
         {{ content | safe }}
         

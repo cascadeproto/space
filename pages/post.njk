@@ -9,8 +9,8 @@ nocomments: true
 <ul class="archive">
 {%- for post in collections.allarticles -%}
   <li>
-    <span>{% if not post.data.post.date %}{{ post.date.toLocaleDateString() }}{% else %}{{ post.data.post.date.toLocaleDateString() }}{% endif %}</span>
-    <a href="{{ post.url }}">{% if not post.data.post.title %}{{ post.data.title | safe }}{% else %}{{ post.data.post.title | safe }}{% endif %}</a>
+    <span>{{ post.date.toLocaleDateString() }}</span>
+    <a href="{{ post.url }}">{{ post.data.title | safe }}</a>
   </li>
 {%- endfor -%}
 </ul>

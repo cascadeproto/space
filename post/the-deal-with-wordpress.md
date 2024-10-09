@@ -11,8 +11,6 @@ date: 2024-09-30
 category: Article
 ---
 
-# The Deal With WordPress
-
 There's a lot of drama going on regarding WordPress. I will try to sum it up as succinctly as I can in the few minutes I have to write this post:
 
 1. Automattic's CEO, Matt Mullenweg, has beef with WP Engine
