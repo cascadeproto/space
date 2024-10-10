@@ -60,21 +60,23 @@
                 </div>
             </li>
         {% elif reply.dataSource === 'homemade' %}
-            <li class="comment h-entry nestingLevel-{{ reply.nestingDepth }}" id="{{ reply.data.comment_id }}">
+            <li class="comment h-entry nestingLevel-{{ reply.nestingDepth }}" id="{{ reply.comment_id }}">
                 <div class="avatar h-card p-author">
-                    <a class="u-url" {% if reply.data.url %}href="{{ reply.data.url }}"{% endif %} target="_blank">
-                        <img class="u-photo" src="{{ reply.data.avatar }}" alt="Avatar of {{ reply.data.name }}" />
-                        <span class="p-name visually-hidden">{{ reply.data.name }}</span>
-                    </a>
+                    {% if reply.url %}<a class="u-url" href="{{ reply.url }}" target="_blank">{% endif %}
+                        <img class="u-photo" src="{{ reply.avatar }}" alt="Avatar of {{ reply.name }}" />
+                        <span class="p-name visually-hidden">{{ reply.name }}</span>
+                    {% if reply.url %}</a>{% endif %}
                 </div>
                 <article>
                     <div class="e-content">
-                        {{ reply.data.comment | safe }}
+                        {{ reply.comment | safe }}
                     </div>
                 </article>
                 <div class="meta">
-                    By <a class="p-author u-url" {% if reply.data.url %}href="{{ reply.data.url }}"{% endif %} target="_blank">{{ reply.data.name }}</a> • 
-                    <a href="{{ siteRoot + page.url + '#' + reply.data.comment_id }}">Permalink</a> • 
+                    By 
+                        {% if reply.url %}<a class="p-author u-url" href="{{ reply.url }}" target="_blank">{% endif %}
+                            {{ reply.name }}{% if reply.url %}</a>{% endif %} • 
+                    <a href="{{ siteRoot + page.url + '#' + reply.comment_id }}">Permalink</a> • 
                     <a href="#reply" class="reply-hook">Reply here</a>
                     <time class="dt-published visually-hidden" datetime="{{ reply.created_at }}">{{ reply.created_at }}</time>
                 </div>
