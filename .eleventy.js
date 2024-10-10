@@ -73,6 +73,7 @@ module.exports = function (eleventyConfig) {
         const alttextRegex = /alt="(.*?)"/g;
         const classesRegex = /class="(.*?)"/g;
         const usageRegex = /usage="(.*?)"/g;
+        const titleRegex = /title="(.*?)"/g;
         const captionRegex = /data-caption="(.*?)"/g;
         if (this.page.outputFileExtension == 'html') {
             console.log('Scanning: ' + this.page.outputPath);
@@ -113,9 +114,16 @@ module.exports = function (eleventyConfig) {
                             loading: 'lazy',
                             decoding: 'async'
                         };
-                        let caption = matches[i].match(captionRegex) ? matches[i].match(captionRegex)[0].slice(14, -1) : '';
-                        let captionOpening = matches[i].match(captionRegex) ? `<figure>` : '';
-                        let captionClosing = matches[i].match(captionRegex) ? `<figcaption>${caption}</figcaption></figure>` : '';
+                        let caption;
+                        if (matches[i].match(captionRegex)) {
+                            caption = matches[i].match(captionRegex)[0].slice(14, -1);
+                        } else if (matches[i].match(titleRegex)) {
+                            caption = matches[i].match(titleRegex)[0].slice(7, -1);
+                        } else {
+                            caption = '';
+                        }
+                        let captionOpening = caption ? `<figure>` : '';
+                        let captionClosing = caption ? `<figcaption>${caption}</figcaption></figure>` : '';
                         newContent = newContent.replace(matches[i], `${captionOpening}${Image.generateHTML(metadata, attributes)}${captionClosing}`);
                     } else {
                         let noTransform = matches[i].replace('notransform', '');
