@@ -2,7 +2,7 @@
 title: Gender Journey
 tags: [reflection, identity, lgbtq, gender]
 excerpt: In which a time of gender questioning is succinctly summarized.
-date: 2024-10-09
+date: 2024-10-10
 category: Article
 featuredimage: ''
 bskyLink: ''
